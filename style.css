@@ -1528,68 +1528,160 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero h1 { font-size: 2.2rem; min-height: 100px; }
-            .tagline { font-size: 0.85rem; }
-            .about-card { padding: 25px 15px; }
-            .skill-item { width: 50px; height: 50px; font-size: 18px; }
-            .exp-header { flex-direction: column; align-items: flex-start; }
-            .exp-card { width: 300px; padding: 20px; }
-            .award-header { flex-direction: column; align-items: flex-start; }
-            .modal-content { max-width: 95%; }
-            .project-card { width: 280px; }
-            .contact-grid.two-items { grid-template-columns: 1fr; }
-            .contact-card-wrapper { padding: 25px 15px; }
-            #slidehint { display: block; }
-
-            .navbar {
-        width: 95%;
-        padding: 6px 12px;
-    }
-
-    .nav-container {
-        gap: 8px;
-    }
-
-    .nav-links {
-        display: flex !important;
-        gap: 10px;
-    }
-
-    .nav-links a {
-        font-size: 0.72rem;
-        padding: 2px 4px;
-    }
-
-    .logo {
-        font-size: 0.85rem;
-    }
+        /* Navbar compact adjustments */
+        .navbar {
+            width: 95%;
+            padding: 8px 14px;
         }
 
+        .nav-container {
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex !important;
+            gap: 12px;
+        }
+
+        .nav-links a {
+            font-size: 0.75rem;
+            padding: 2px 4px;
+        }
+
+        .logo {
+            font-size: 0.9rem;
+        }
+
+        /* Hero & Sections */
+        .hero h1 { 
+            font-size: 2.2rem; 
+            min-height: 100px; 
+        }
+        .tagline { 
+            font-size: 0.85rem; 
+        }
+        .about-card { 
+            padding: 25px 15px; 
+        }
+        .skill-item { 
+            width: 50px; 
+            height: 50px; 
+            font-size: 18px; 
+        }
+        .exp-header { 
+            flex-direction: column; 
+            align-items: flex-start; 
+        }
+        .exp-card { 
+            width: 100%; 
+            max-width: 320px; 
+            padding: 20px; 
+        }
+        .award-header { 
+            flex-direction: column; 
+            align-items: flex-start; 
+        }
+        
+        /* FIX: Project Filter Buttons (3 items side-by-side in a single row) */
+        .filter-container,
+        .project-filters {
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: center !important;
+            align-items: center !important;
+            gap: 6px !important;
+            width: 100% !important;
+            max-width: 360px !important;
+            padding: 6px 8px !important;
+            margin: 0 auto 16px auto !important;
+            box-sizing: border-box;
+        }
+
+        .filter-btn {
+            flex: 1 !important;
+            text-align: center !important;
+            font-size: 0.68rem !important;
+            padding: 6px 4px !important;
+            white-space: nowrap !important;
+        }
+
+        /* FIX: Make Project Modals fit perfectly inside the box without scrolling */
+        .modal-content { 
+            width: 90% !important;
+            max-width: 380px !important;
+            max-height: none !important;
+            overflow: hidden !important; /* Disables scrollbars */
+            padding: 16px 14px !important;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Scale down modal elements to guarantee no overflow */
+        .modal-content h2,
+        .modal-content h3 {
+            font-size: 1.15rem !important;
+            line-height: 1.25 !important;
+            margin-bottom: 6px !important;
+        }
+
+        .modal-content img {
+            width: 100% !important;
+            height: auto !important;
+            max-height: 220px !important;
+            object-fit: contain !important;
+            background-color: #040d12;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            margin: 8px 0 12px 0 !important;
+        }
+
+        .modal-content p {
+            font-size: 0.76rem !important;
+            line-height: 1.3 !important;
+            margin-bottom: 6px !important;
+        }
+
+        .project-card { 
+            width: 280px; 
+        }
+        .contact-grid.two-items { 
+            grid-template-columns: 1fr; 
+        }
+        .contact-card-wrapper { 
+            padding: 25px 15px; 
+        }
+        #slidehint { 
+            display: block; 
+        }
+    }
+
     @media (max-width: 320px) {
-    .navbar {
-        width: 96%;
-        padding: 5px 8px;
-    }
+        .navbar {
+            width: 96%;
+            padding: 5px 8px;
+        }
 
-    .nav-container {
-        gap: 4px;
-    }
+        .nav-container {
+            gap: 4px;
+        }
 
-    .nav-links {
-        gap: 6px;
-    }
+        .nav-links {
+            gap: 6px;
+        }
 
-    .nav-links a {
-        font-size: 0.65rem;
-    }
+        .nav-links a {
+            font-size: 0.65rem;
+        }
 
-    .logo {
-        font-size: 0.75rem;
-    }
+        .logo {
+            font-size: 0.75rem;
+        }
 
-    /* Hide the settings gear on extremely small screens to prevent overflow */
-    .settings-btn {
-        display: none;
+        /* Hide the audio toggle / settings button on extremely small screens to prevent overflow */
+        #musicToggleBtn, 
+        .settings-btn {
+            display: none;
+        }
     }
-}
