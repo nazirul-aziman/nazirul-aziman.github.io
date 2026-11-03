@@ -15,6 +15,35 @@
     <title>NazirulAziman - Web Portfolio</title>
 </head>
 <body>
+    <!-- PRELOADER SETUP -->
+    <div id="preloader">
+        <div class="preloader-content">
+            <!-- Star Icon with Center-Out Fill Effect -->
+            <div class="loader-star-container">
+                <svg viewBox="0 0 100 100" width="80" height="80">
+                    <!-- Background / Unfilled Star (Outline style) -->
+                    <g stroke="#00e5ff" stroke-width="6" stroke-linecap="round" opacity="0.3">
+                        <line x1="50" y1="10" x2="50" y2="90" />
+                        <line x1="10" y1="50" x2="90" y2="50" />
+                        <line x1="22" y1="22" x2="78" y2="78" />
+                        <line x1="22" y1="78" x2="78" y2="22" />
+                    </g>
+
+                    <!-- Foreground / Solid Star (Scales up from center) -->
+                    <g id="centerFillGroup" stroke="#00e5ff" stroke-width="6" stroke-linecap="round" transform="scale(0)" style="transform-origin: 50px 50px;">
+                        <line x1="50" y1="10" x2="50" y2="90" />
+                        <line x1="10" y1="50" x2="90" y2="50" />
+                        <line x1="22" y1="22" x2="78" y2="78" />
+                        <line x1="22" y1="78" x2="78" y2="22" />
+                        <circle cx="50" cy="50" r="16" fill="#00e5ff" />
+                    </g>
+                </svg>
+            </div>
+            <!-- Live Percentage Counter -->
+            <div id="loader-percentage">0%</div>
+        </div>
+    </div>
+
     <!-- SECTION 1: HERO SCREEN (100vh) -->
     <div class="section-container" id="home">
         <!-- Header / Navigation Bar -->
@@ -30,14 +59,29 @@
                     <li><a href="#projects" class="nav-link">Projects</a></li>
                     <li><a href="#contact" class="nav-link">Contact</a></li>
                 </ul>
-                <button class="settings-icon" aria-label="Settings">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="3"></circle>
-                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.6 0 1.14.24 1.51.63z"></path>
+                
+                <!-- Sound Toggle Button (Replaces Settings Icon) -->
+                <button id="musicToggleBtn" class="settings-icon" aria-label="Toggle Background Music">
+                    <!-- Sound On Icon (Default State) -->
+                    <svg id="soundOnIcon" class="audio-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    </svg>
+                    
+                    <!-- Sound Off Icon (Hidden by Default) -->
+                    <svg id="soundOffIcon" class="audio-icon hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <line x1="23" y1="9" x2="17" y2="15"></line>
+                        <line x1="17" y1="9" x2="23" y2="15"></line>
                     </svg>
                 </button>
             </nav>
         </header>
+
+        <!-- Background Audio Element -->
+        <audio id="bgAudio" loop preload="auto">
+            <source src="track/bgsound.mp3" type="audio/mpeg">
+        </audio>
 
         <!-- Hero Content Section -->
         <main class="hero">
@@ -118,61 +162,37 @@
         <section class="skills-section">
             <h2 class="section-title">Skills & Tools</h2>
             
-            <div class="skills-grid">
-                <!-- HTML5 -->
-                <div class="skill-item" data-tooltip="HTML5">
-                    <span class="tool-text" style="color: #E34F26;">HTML</span>
+            <!-- Category 1: Development -->
+            <div class="skill-category-group">
+                <span class="skill-category-title">Development & Frameworks</span>
+                <div class="skills-grid">
+                    <div class="skill-item" data-tooltip="HTML5"><span class="tool-text" style="color: #E34F26;">HTML</span></div>
+                    <div class="skill-item" data-tooltip="CSS3"><span class="tool-text" style="color: #1572B6;">CSS</span></div>
+                    <div class="skill-item" data-tooltip="JavaScript"><span class="tool-text" style="color: #F7DF1E;">JS</span></div>
+                    <div class="skill-item" data-tooltip="AJAX"><span class="tool-text" style="color: #00e5ff; font-size: 0.7rem;">AJAX</span></div>
+                    <div class="skill-item" data-tooltip="PHP"><span class="tool-text" style="color: #777BB4;">PHP</span></div>
+                    <div class="skill-item" data-tooltip="CodeIgniter"><span class="tool-text" style="color: #EE4323; font-size: 0.75rem;">CI</span></div>
+                    <div class="skill-item" data-tooltip="WordPress"><span class="tool-text" style="color: #21759B; font-size: 0.75rem;">WP</span></div>
+                    <div class="skill-item" data-tooltip="Angular JS"><span class="tool-text" style="color: #DD0031; font-size: 0.75rem;">Ng</span></div>
+                    <div class="skill-item" data-tooltip="React Native"><span class="tool-text" style="color: #61DAFB; font-size: 0.75rem;">React</span></div>
+                    <div class="skill-item" data-tooltip="Ionic"><span class="tool-text" style="color: #3880ff; font-size: 0.7rem;">Ionic</span></div>
                 </div>
-                <!-- CSS3 -->
-                <div class="skill-item" data-tooltip="CSS3">
-                    <span class="tool-text" style="color: #1572B6;">CSS</span>
+            </div>
+
+            <!-- Category 2: Design & Tools -->
+            <div class="skill-category-group" style="margin-top: 20px;">
+                <span class="skill-category-title">Design & Multimedia Suite</span>
+                <div class="skills-grid">
+                    <div class="skill-item" data-tooltip="Figma"><span class="tool-text" style="color: #F24E1E; font-size: 0.75rem;">Figma</span></div>
+                    <div class="skill-item" data-tooltip="Adobe Photoshop"><span class="tool-text" style="color: #31A8FF;">Ps</span></div>
+                    <div class="skill-item" data-tooltip="Adobe InDesign"><span class="tool-text" style="color: #FF3366;">Id</span></div>
+                    <div class="skill-item" data-tooltip="Adobe Premiere"><span class="tool-text" style="color: #9999FF;">Pr</span></div>
+                    <div class="skill-item" data-tooltip="Adobe After Effects"><span class="tool-text" style="color: #CC99FF;">Ae</span></div>
+                    <div class="skill-item" data-tooltip="Adobe Lightroom"><span class="tool-text" style="color: #3399FF;">Lr</span></div>
+                    <div class="skill-item" data-tooltip="Adobe Dreamweaver"><span class="tool-text" style="color: #FF9900;">Dw</span></div>
+                    <div class="skill-item" data-tooltip="Canva"><span class="tool-text" style="color: #00C4CC;">Cv</span></div>
+                    <div class="skill-item" data-tooltip="Microsoft Office"><span class="tool-text" style="color: #107C41; font-size: 0.75rem;">Office</span></div>
                 </div>
-                <!-- JavaScript -->
-                <div class="skill-item" data-tooltip="JavaScript">
-                    <span class="tool-text" style="color: #F7DF1E;">JS</span>
-                </div>
-                <!-- AJAX -->
-                <div class="skill-item" data-tooltip="AJAX">
-                    <span class="tool-text" style="color: #00e5ff; font-size: 0.7rem;">AJAX</span>
-                </div>
-                <!-- PHP -->
-                <div class="skill-item" data-tooltip="PHP">
-                    <span class="tool-text" style="color: #777BB4;">PHP</span>
-                </div>
-                <!-- CodeIgniter -->
-                <div class="skill-item" data-tooltip="CodeIgniter">
-                    <span class="tool-text" style="color: #EE4323; font-size: 0.75rem;">CI</span>
-                </div>
-                <!-- WordPress -->
-                <div class="skill-item" data-tooltip="WordPress">
-                    <span class="tool-text" style="color: #21759B; font-size: 0.75rem;">WP</span>
-                </div>
-                <!-- Angular JS -->
-                <div class="skill-item" data-tooltip="Angular JS">
-                    <span class="tool-text" style="color: #DD0031; font-size: 0.75rem;">Ng</span>
-                </div>
-                <!-- React Native -->
-                <div class="skill-item" data-tooltip="React Native">
-                    <span class="tool-text" style="color: #61DAFB; font-size: 0.75rem;">React</span>
-                </div>
-                <!-- Ionic -->
-                <div class="skill-item" data-tooltip="Ionic">
-                    <span class="tool-text" style="color: #3880ff; font-size: 0.7rem;">Ionic</span>
-                </div>
-                <!-- Figma -->
-                <div class="skill-item" data-tooltip="Figma">
-                    <span class="tool-text" style="color: #F24E1E; font-size: 0.75rem;">Figma</span>
-                </div>
-                
-                <!-- Adobe Creative Suite & Design Tools -->
-                <div class="skill-item" data-tooltip="Adobe Photoshop"><span class="tool-text" style="color: #31A8FF;">Ps</span></div>
-                <div class="skill-item" data-tooltip="Adobe InDesign"><span class="tool-text" style="color: #FF3366;">Id</span></div>
-                <div class="skill-item" data-tooltip="Adobe Premiere"><span class="tool-text" style="color: #9999FF;">Pr</span></div>
-                <div class="skill-item" data-tooltip="Adobe After Effects"><span class="tool-text" style="color: #CC99FF;">Ae</span></div>
-                <div class="skill-item" data-tooltip="Adobe Lightroom"><span class="tool-text" style="color: #3399FF;">Lr</span></div>
-                <div class="skill-item" data-tooltip="Adobe Dreamweaver"><span class="tool-text" style="color: #FF9900;">Dw</span></div>
-                <div class="skill-item" data-tooltip="Canva"><span class="tool-text" style="color: #00C4CC;">Cv</span></div>
-                <div class="skill-item" data-tooltip="Microsoft Office"><span class="tool-text" style="color: #107C41; font-size: 0.75rem;">Office</span></div>
             </div>
         </section>
 

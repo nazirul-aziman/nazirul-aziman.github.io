@@ -1,3 +1,125 @@
+// Preloader animation setup
+document.addEventListener('DOMContentLoaded', () => {
+    const percentageText = document.getElementById('loader-percentage');
+    const centerFillGroup = document.getElementById('centerFillGroup');
+    const preloader = document.getElementById('preloader');
+    
+    let currentPercentage = 0;
+    
+    const loadInterval = setInterval(() => {
+        currentPercentage += Math.floor(Math.random() * 5) + 2;
+        
+        if (currentPercentage >= 100) {
+            currentPercentage = 100;
+            clearInterval(loadInterval);
+            
+            // Fade out splash screen after reaching 100%
+            setTimeout(() => {
+                preloader.classList.add('fade-out');
+            }, 500);
+        }
+        
+        // Update percentage text display
+        percentageText.textContent = currentPercentage + '%';
+        
+        // Scale the solid star smoothly from the center (0 to 1)
+        let scaleValue = currentPercentage / 100;
+        centerFillGroup.setAttribute('transform', `scale(${scaleValue})`);
+        
+    }, 60);
+});
+
+//audio toggle button
+document.addEventListener('DOMContentLoaded', () => {
+    const percentageText = document.getElementById('loader-percentage');
+    const centerFillGroup = document.getElementById('centerFillGroup');
+    const preloader = document.getElementById('preloader');
+    
+    const musicToggleBtn = document.getElementById('musicToggleBtn');
+    const bgAudio = document.getElementById('bgAudio');
+    const soundOnIcon = document.getElementById('soundOnIcon');
+    const soundOffIcon = document.getElementById('soundOffIcon');
+    
+    let currentPercentage = 0;
+    let isPlaying = false;
+
+    // Helper function to update toggle icon state
+    const updateIcons = (playing) => {
+        if (playing) {
+            soundOffIcon.classList.add('hidden');
+            soundOnIcon.classList.remove('hidden');
+        } else {
+            soundOnIcon.classList.add('hidden');
+            soundOffIcon.classList.remove('hidden');
+        }
+    };
+
+    // Helper function to play audio
+    const startAudio = () => {
+        if (!bgAudio) return;
+        bgAudio.volume = 0.3;
+        bgAudio.play().then(() => {
+            isPlaying = true;
+            updateIcons(true);
+        }).catch(error => {
+            console.log("Autoplay blocked by browser. Music will start on user interaction.");
+            isPlaying = false;
+            updateIcons(false);
+
+            // Fallback: start audio on first user click anywhere if autoplay is blocked
+            const startOnInteraction = () => {
+                bgAudio.play().then(() => {
+                    isPlaying = true;
+                    updateIcons(true);
+                    window.removeEventListener('click', startOnInteraction);
+                }).catch(err => console.log("Interaction play failed:", err));
+            };
+            window.addEventListener('click', startOnInteraction, { once: true });
+        });
+    };
+
+    // 1. Preloader Animation Loop
+    const loadInterval = setInterval(() => {
+        currentPercentage += Math.floor(Math.random() * 5) + 2;
+        
+        if (currentPercentage >= 100) {
+            currentPercentage = 100;
+            clearInterval(loadInterval);
+            
+            // 2. Trigger fade-out & start audio RIGHT AFTER splash screen finishes
+            setTimeout(() => {
+                preloader.classList.add('fade-out');
+                document.body.classList.add('loaded'); // Triggers main content fade-in
+                
+                // Audio starts here, right when preloader transitions out
+                startAudio();
+            }, 500);
+        }
+        
+        percentageText.textContent = currentPercentage + '%';
+        let scaleValue = currentPercentage / 100;
+        centerFillGroup.setAttribute('transform', `scale(${scaleValue})`);
+        
+    }, 60);
+
+    // 3. Manual Navigation Audio Toggle Button Click Handler
+    if (musicToggleBtn && bgAudio) {
+        musicToggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent trigger conflict
+            if (isPlaying) {
+                bgAudio.pause();
+                isPlaying = false;
+                updateIcons(false);
+            } else {
+                bgAudio.play().then(() => {
+                    isPlaying = true;
+                    updateIcons(true);
+                }).catch(err => console.log("Toggle play failed:", err));
+            }
+        });
+    }
+});
+
 const words = [
         "Web Developer",
         "IT Technician",
