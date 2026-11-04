@@ -1224,13 +1224,11 @@ header {
 .projects-section {
     width: 100%;
     max-width: 1200px;
-    margin: auto;
-    padding: 70px 20px 20px 20px;
+    margin: 80px auto; /* Adds generous spacing above and below the section */
+    padding: 40px 20px;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 100vh;
+    display: block; /* Changed from flex to block to prevent vertical centering overlap */
+    min-height: auto; /* Removed min-height: 100vh which caused the vertical crunch */
 }
 
 .section-header-wrap {
@@ -2077,23 +2075,32 @@ header {
     .filter-container,
     .project-filters {
         display: flex !important;
-        flex-direction: row !important;
+        flex-direction: column !important;
         justify-content: center !important;
-        align-items: center !important;
-        gap: 6px !important;
-        width: 100% !important;
-        max-width: 360px !important;
-        padding: 6px 8px !important;
-        margin: 0 auto 16px auto !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+        width: 90% !important; /* Ensures it stays inside screen bounds */
+        max-width: 320px !important;
+        padding: 12px 14px !important;
+        margin: 0 auto 20px auto !important;
         box-sizing: border-box;
+        border-radius: 20px !important;
+    }
+
+    .projects-section {
+        margin-top: 550px !important;
+        padding-top: 30px !important;
+        position: relative;
+        z-index: 2; /* Ensures it renders above background layers */
     }
 
     .filter-btn {
-        flex: 1 !important;
+        width: 100% !important;
         text-align: center !important;
-        font-size: 0.68rem !important;
-        padding: 6px 4px !important;
-        white-space: nowrap !important;
+        font-size: 0.74rem !important;
+        padding: 10px 8px !important;
+        white-space: normal !important;
+        word-break: break-word;
     }
 
     /* Project Modals */
@@ -2135,6 +2142,10 @@ header {
 
     .project-card { 
         width: 280px; 
+    }
+
+    .contact-section{
+        margin-top: 550px !important;
     }
 
     .contact-grid.two-items { 
