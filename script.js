@@ -179,6 +179,31 @@ function deletingEffect() {
 
 document.addEventListener("DOMContentLoaded", () => {
     typingEffect();
+
+    // Hero Entry / Exit Observer Animation Handler
+    const heroElement = document.querySelector('.hero');
+    const homeSection = document.getElementById('home');
+
+    if (heroElement && homeSection) {
+        // Trigger initial slow entry animation on page reload
+        setTimeout(() => {
+            heroElement.classList.add('hero-animated');
+        }, 50);
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Enter: slow blur-to-visible + rise (yellow), burst (green), pop-scale (red)
+                    heroElement.classList.add('hero-animated');
+                } else {
+                    // Exit: fast blur-out (yellow/green) and scale down to 0 (red)
+                    heroElement.classList.remove('hero-animated');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        observer.observe(homeSection);
+    }
 });
 
 document.getElementById('scrollArrow').addEventListener('click', () => {
@@ -224,6 +249,59 @@ document.getElementById('downloadCvBtn').addEventListener('click', () => {
     link.click();
     document.body.removeChild(link);
 });
+
+// Pop-up card animation & Number Counter Observer (re-triggers every time)
+document.addEventListener('DOMContentLoaded', () => {
+    const aboutCard = document.querySelector('.about-card');
+    const aboutSection = document.getElementById('about');
+    const statNumbers = document.querySelectorAll('.stat-number');
+    let hasAnimated = false;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // 1. Trigger the card, text, stats grid, and button pop-up animations
+                aboutCard.classList.add('visible');
+
+                // 2. Trigger the number counter animation
+                if (!hasAnimated) {
+                    statNumbers.forEach(stat => {
+                        const target = +stat.getAttribute('data-target');
+                        let current = 0;
+                        const duration = 1200; // Animation duration in milliseconds (1.2s)
+                        const stepTime = 30; // Update interval in ms
+                        const steps = duration / stepTime;
+                        const increment = target / steps;
+
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= target) {
+                                stat.textContent = '+' + target;
+                                clearInterval(timer);
+                            } else {
+                                stat.textContent = '+' + Math.floor(current);
+                            }
+                        }, stepTime);
+                    });
+                    hasAnimated = true; 
+                }
+            } else {
+                // 3. Reset everything when scrolling away so it animates again next time
+                aboutCard.classList.remove('visible');
+                hasAnimated = false; 
+
+                // Reset numbers back to 0 so the counter can run again
+                statNumbers.forEach(stat => {
+                    stat.textContent = '+0';
+                });
+            }
+        });
+    }, { threshold: 0.2 });
+
+    if (aboutSection) {
+        observer.observe(aboutSection);
+    }
+});
 // ==========================================
 // //section 3 end here
 // ==========================================
@@ -232,149 +310,187 @@ document.getElementById('downloadCvBtn').addEventListener('click', () => {
 // ==========================================
 // //exclusively for section 4 start here (Skills & Tools)
 // ==========================================
-// Skills section relies primarily on markup tooltips & CSS hover effects.
+
+document.addEventListener('DOMContentLoaded', () => {
+    const skillsSection = document.querySelector('.skills-section');
+
+    if (!skillsSection) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                skillsSection.classList.add('visible');
+            } else {
+                skillsSection.classList.remove('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    observer.observe(skillsSection);
+});
+
 // ==========================================
 // //section 4 end here
 // ==========================================
 
 
 // ==========================================
-// //exclusively for section 5 start here (Experience Section Drag & Seamless Infinite Ticker)
+// //exclusively for section 5 start here (Experience Section Drag, Infinite Ticker & Animation Observer)
 // ==========================================
-const slider = document.getElementById('expContainer');
-const expTrack = document.getElementById('expTrack');
+document.addEventListener('DOMContentLoaded', () => {
+    const slider = document.getElementById('expContainer');
+    const expTrack = document.getElementById('expTrack');
+    const expSection = document.querySelector('.experience-section');
 
-// Seamless Infinite Loop Setup: Clone all experience cards and append them to track
-if (expTrack) {
-    const cards = Array.from(expTrack.children);
-    cards.forEach(card => {
-        const clone = card.cloneNode(true);
-        expTrack.appendChild(clone);
+    // 1. Scroll Intersection Observer for Pop-up & Blur Animation
+    if (expSection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    expSection.classList.add('visible');
+                } else {
+                    expSection.classList.remove('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        observer.observe(expSection);
+    }
+
+    // 2. Seamless Infinite Loop Setup: Clone all experience cards and append them to track
+    if (expTrack) {
+        const cards = Array.from(expTrack.children);
+        cards.forEach(card => {
+            const clone = card.cloneNode(true);
+            expTrack.appendChild(clone);
+        });
+    }
+
+    if (!slider || !expTrack) return;
+
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+    let velocity = 0;
+    let lastX = 0;
+    let lastTime = 0;
+    let momentumID;
+
+    // Mouse Drag Interaction
+    slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        cancelAnimationFrame(momentumID);
+        slider.classList.add('active');
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+        lastX = e.pageX;
+        lastTime = performance.now();
     });
-}
 
-let isDown = false;
-let startX;
-let scrollLeft;
-let velocity = 0;
-let lastX = 0;
-let lastTime = 0;
-let momentumID;
+    slider.addEventListener('mouseleave', () => {
+        if (!isDown) return;
+        isDown = false;
+        slider.classList.remove('active');
+        startMomentum();
+    });
 
-// Mouse Drag Interaction
-slider.addEventListener('mousedown', (e) => {
-    isDown = true;
-    cancelAnimationFrame(momentumID);
-    slider.classList.add('active');
-    startX = e.pageX - slider.offsetLeft;
-    scrollLeft = slider.scrollLeft;
-    lastX = e.pageX;
-    lastTime = performance.now();
-});
+    slider.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.classList.remove('active');
+        startMomentum();
+    });
 
-slider.addEventListener('mouseleave', () => {
-    if (!isDown) return;
-    isDown = false;
-    slider.classList.remove('active');
-    startMomentum();
-});
+    slider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX) * 1.5;
+        
+        // Calculate velocity for smooth glide release
+        const now = performance.now();
+        const dt = now - lastTime;
+        if (dt > 0) {
+            velocity = (e.pageX - lastX) / dt * 15; // smoothness factor
+        }
+        lastX = e.pageX;
+        lastTime = now;
 
-slider.addEventListener('mouseup', () => {
-    isDown = false;
-    slider.classList.remove('active');
-    startMomentum();
-});
+        slider.scrollLeft = scrollLeft - walk;
+    });
 
-slider.addEventListener('mousemove', (e) => {
-    if (!isDown) return;
-    e.preventDefault();
-    const x = e.pageX - slider.offsetLeft;
-    const walk = (x - startX) * 1.5;
-    
-    // Calculate velocity for smooth glide release
-    const now = performance.now();
-    const dt = now - lastTime;
-    if (dt > 0) {
-        velocity = (e.pageX - lastX) / dt * 15; // smoothness factor
-    }
-    lastX = e.pageX;
-    lastTime = now;
+    // Touch Support for Mobile / Tablets
+    slider.addEventListener('touchstart', (e) => {
+        cancelAnimationFrame(momentumID);
+        startX = e.touches[0].pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+        lastX = e.touches[0].pageX;
+        lastTime = performance.now();
+    });
 
-    slider.scrollLeft = scrollLeft - walk;
-});
+    slider.addEventListener('touchmove', (e) => {
+        const x = e.touches[0].pageX - slider.offsetLeft;
+        const walk = (x - startX) * 1.5;
+        
+        const now = performance.now();
+        const dt = now - lastTime;
+        if (dt > 0) {
+            velocity = (e.touches[0].pageX - lastX) / dt * 15;
+        }
+        lastX = e.touches[0].pageX;
+        lastTime = now;
 
-// Touch Support for Mobile / Tablets
-slider.addEventListener('touchstart', (e) => {
-    cancelAnimationFrame(momentumID);
-    startX = e.touches[0].pageX - slider.offsetLeft;
-    scrollLeft = slider.scrollLeft;
-    lastX = e.touches[0].pageX;
-    lastTime = performance.now();
-});
+        slider.scrollLeft = scrollLeft - walk;
+    });
 
-slider.addEventListener('touchmove', (e) => {
-    const x = e.touches[0].pageX - slider.offsetLeft;
-    const walk = (x - startX) * 1.5;
-    
-    const now = performance.now();
-    const dt = now - lastTime;
-    if (dt > 0) {
-        velocity = (e.touches[0].pageX - lastX) / dt * 15;
-    }
-    lastX = e.touches[0].pageX;
-    lastTime = now;
+    slider.addEventListener('touchend', () => {
+        startMomentum();
+    });
 
-    slider.scrollLeft = scrollLeft - walk;
-});
+    // Smooth Momentum Glide Function with Infinite Boundary Correction
+    function startMomentum() {
+        if (Math.abs(velocity) < 0.1) return;
+        slider.scrollLeft -= velocity;
+        velocity *= 0.92; // Friction decay rate
 
-slider.addEventListener('touchend', () => {
-    startMomentum();
-});
-
-// Smooth Momentum Glide Function with Infinite Boundary Correction
-function startMomentum() {
-    if (Math.abs(velocity) < 0.1) return;
-    slider.scrollLeft -= velocity;
-    velocity *= 0.92; // Friction decay rate
-
-    // Infinite loop check for momentum
-    checkInfiniteScroll();
-
-    momentumID = requestAnimationFrame(startMomentum);
-}
-
-// Check and loop scroll position seamlessly
-function checkInfiniteScroll() {
-    const maxScroll = expTrack.scrollWidth / 2;
-    if (slider.scrollLeft >= maxScroll) {
-        slider.scrollLeft -= maxScroll;
-    } else if (slider.scrollLeft <= 0) {
-        slider.scrollLeft += maxScroll;
-    }
-}
-
-// Very Slow Continuous Ticker Auto-Scroll Animation
-let tickerSpeed = 0.35; // Adjust speed (lower = slower)
-let tickerInterval = setInterval(() => {
-    if (!isDown) {
-        slider.scrollLeft += tickerSpeed;
+        // Infinite loop check for momentum
         checkInfiniteScroll();
+
+        momentumID = requestAnimationFrame(startMomentum);
     }
-}, 30);
 
-// Pause auto-scroll when user hovers or interacts
-slider.addEventListener('mouseenter', () => {
-    clearInterval(tickerInterval);
-});
+    // Check and loop scroll position seamlessly
+    function checkInfiniteScroll() {
+        const maxScroll = expTrack.scrollWidth / 2;
+        if (slider.scrollLeft >= maxScroll) {
+            slider.scrollLeft -= maxScroll;
+        } else if (slider.scrollLeft <= 0) {
+            slider.scrollLeft += maxScroll;
+        }
+    }
 
-slider.addEventListener('mouseleave', () => {
-    clearInterval(tickerInterval);
-    tickerInterval = setInterval(() => {
+    // Very Slow Continuous Ticker Auto-Scroll Animation
+    let tickerSpeed = 0.35; // Adjust speed (lower = slower)
+    let tickerInterval = setInterval(() => {
         if (!isDown) {
             slider.scrollLeft += tickerSpeed;
             checkInfiniteScroll();
         }
     }, 30);
+
+    // Pause auto-scroll when user hovers or interacts
+    slider.addEventListener('mouseenter', () => {
+        clearInterval(tickerInterval);
+    });
+
+    slider.addEventListener('mouseleave', () => {
+        clearInterval(tickerInterval);
+        tickerInterval = setInterval(() => {
+            if (!isDown) {
+                slider.scrollLeft += tickerSpeed;
+                checkInfiniteScroll();
+            }
+        }, 30);
+    });
 });
 // ==========================================
 // //section 5 end here
@@ -382,32 +498,54 @@ slider.addEventListener('mouseleave', () => {
 
 
 // ==========================================
-// //exclusively for section 6 start here (Awards & Image Lightbox Modal)
+// //exclusively for section 6 start here (Awards Scroll Observer & Lightbox Modal)
 // ==========================================
-const modal = document.getElementById('imageModal');
-const modalImg = document.getElementById('expandedImg');
-const closeModalBtn = document.getElementById('closeModalBtn');
-const triggers = document.querySelectorAll('.modal-trigger');
+document.addEventListener('DOMContentLoaded', () => {
+    const awardsSection = document.querySelector('.awards-section');
 
-triggers.forEach(trigger => {
-    trigger.addEventListener('click', () => {
-        const imgElement = trigger.querySelector('img');
-        if (imgElement) {
-            modal.style.display = 'block';
-            modalImg.src = imgElement.src; // Automatically uses the exact image source
-        }
+    // Scroll Observer for Blur & Pop-up Animation
+    if (awardsSection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    awardsSection.classList.add('visible');
+                } else {
+                    awardsSection.classList.remove('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        observer.observe(awardsSection);
+    }
+
+    // Modal Lightbox Functionality
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('expandedImg');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const triggers = document.querySelectorAll('.modal-trigger');
+
+    triggers.forEach(trigger => {
+        trigger.addEventListener('click', () => {
+            const imgElement = trigger.querySelector('img');
+            if (imgElement) {
+                modal.style.display = 'block';
+                modalImg.src = imgElement.src; 
+            }
+        });
     });
-});
 
-if (closeModalBtn) {
-    closeModalBtn.addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
-}
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+    }
 
-modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-        modal.style.display = 'none';
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
     }
 });
 // ==========================================
@@ -416,41 +554,74 @@ modal.addEventListener('click', (e) => {
 
 
 // ==========================================
-// //exclusively for section 7 start here (Personal Projects, Filters & Modal Popups)
+// Section 7 Scroll Animation & Interactivity Logic
 // ==========================================
-// Project Filter & Interactive Card Highlighting
-const filterBtns = document.querySelectorAll('.filter-btn');
-const projectCards = document.querySelectorAll('.project-card');
+document.addEventListener('DOMContentLoaded', () => {
 
-filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        // Remove active state from all buttons
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+    // ----------------------------------------------------
+    // 1. Scroll-Triggered Re-animating Blur-to-Clear & Pop-Up
+    // ----------------------------------------------------
+    const projectsSection = document.querySelector('.projects-section');
 
-        const filterValue = btn.getAttribute('data-filter');
+    if (projectsSection) {
+        const observerOptions = {
+            root: null,
+            threshold: 0.15 // Triggers when 15% of the section is in view
+        };
 
-        projectCards.forEach(card => {
-            const category = card.getAttribute('data-category');
-            if (filterValue === 'all' || category === filterValue) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Add class to animate into clear view
+                    entry.target.classList.add('is-visible');
+                } else {
+                    // Remove class when scrolling away so it resets for the next scroll
+                    entry.target.classList.remove('is-visible');
+                }
+            });
+        }, observerOptions);
+
+        sectionObserver.observe(projectsSection);
+    }
+
+    // ----------------------------------------------------
+    // 2. Personal Projects Filters Logic
+    // ----------------------------------------------------
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filterValue = btn.getAttribute('data-filter');
+
+            projectCards.forEach(card => {
+                const category = card.getAttribute('data-category');
+                card.style.transitionDelay = '0s'; // reset delay for filtering
+
+                if (filterValue === 'all' || category === filterValue) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeInCard 0.4s ease forwards';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
         });
     });
-});
 
-// Make project cards toggle active-project on click
-projectCards.forEach(card => {
-    card.addEventListener('click', () => {
-        projectCards.forEach(c => c.classList.remove('active-project'));
-        card.classList.add('active-project');
+    // Interactive Card Selection Highlighting
+    projectCards.forEach(card => {
+        card.addEventListener('click', () => {
+            projectCards.forEach(c => c.classList.remove('active-project'));
+            card.classList.add('active-project');
+        });
     });
-});
 
-// Project modal pop up details and navigation logic
-document.addEventListener('DOMContentLoaded', () => {
+    // ----------------------------------------------------
+    // 3. Modal & Dynamic Data Handling
+    // ----------------------------------------------------
     const projectModal = document.getElementById('projectModal');
     const modalClose = document.getElementById('modalClose');
     const modalTitle = document.getElementById('modalTitle');
@@ -464,99 +635,107 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentProjIndex = 0;
     let currentImageIndex = 0;
 
-    // Map projects and split comma-separated images into an array
     const projectsData = Array.from(projectCards).map(card => {
         const rawImages = card.getAttribute('data-images') || card.querySelector('.project-img').getAttribute('src');
         return {
             title: card.querySelector('h3').textContent,
-            description: card.querySelector('p').textContent,
+            tagline: card.querySelector('.project-tagline').textContent,
+            context: card.getAttribute('data-context') || '',
+            status: card.getAttribute('data-status') || 'NDA Protected',
             details: card.getAttribute('data-details') || '',
-            category: card.getAttribute('data-category').toUpperCase() + ' UI',
-            images: rawImages.split(',').map(img => img.trim()) // Creates the image array
+            category: card.getAttribute('data-category').toUpperCase() === 'APP' 
+                ? 'MOBILE APPLICATION (COLLEGE MILESTONE)' 
+                : 'ENTERPRISE WEB APPLICATION (MINDTREX)',
+            images: rawImages.split(',').map(img => img.trim())
         };
     });
 
     function updateModalContent(projIndex, imgIndex = 0) {
         const project = projectsData[projIndex];
+        if (!modalTitle) return;
+        
         modalTitle.textContent = project.title;
-        modalCategory.textContent = project.category;
-        modalDesc.textContent = project.description;
-        modalDetails.textContent = project.details;
-        modalImg.src = project.images[imgIndex]; // Updates to the current image in the array
+        if (modalCategory) {
+            modalCategory.textContent = `${project.category} ${project.context} [${project.status}]`;
+        }
+        if (modalDesc) modalDesc.textContent = project.tagline;
+        if (modalDetails) modalDetails.textContent = project.details;
+        if (modalImg) modalImg.src = project.images[imgIndex];
     }
 
-    // Open modal on card click
     projectCards.forEach((card, index) => {
         card.addEventListener('click', () => {
             currentProjIndex = index;
-            currentImageIndex = 0; // Reset to first image
+            currentImageIndex = 0; 
             updateModalContent(currentProjIndex, currentImageIndex);
-            projectModal.classList.add('active');
+            if (projectModal) projectModal.classList.add('active');
         });
     });
 
-    // Close actions
-    modalClose.addEventListener('click', () => projectModal.classList.remove('active'));
-    projectModal.addEventListener('click', (e) => { if (e.target === projectModal) projectModal.classList.remove('active'); });
+    if (modalClose && projectModal) {
+        modalClose.addEventListener('click', () => projectModal.classList.remove('active'));
+        projectModal.addEventListener('click', (e) => { 
+            if (e.target === projectModal) projectModal.classList.remove('active'); 
+        });
+    }
 
-    // Next button: cycles through sub-images first, then switches projects
-    modalNext.addEventListener('click', () => {
-        const project = projectsData[currentProjIndex];
-        if (currentImageIndex < project.images.length - 1) {
-            currentImageIndex++;
-            updateModalContent(currentProjIndex, currentImageIndex);
-        } else {
-            currentProjIndex = (currentProjIndex + 1) % projectsData.length;
-            currentImageIndex = 0;
-            updateModalContent(currentProjIndex, currentImageIndex);
-        }
-    });
+    if (modalNext && modalPrev) {
+        modalNext.addEventListener('click', () => {
+            const project = projectsData[currentProjIndex];
+            if (currentImageIndex < project.images.length - 1) {
+                currentImageIndex++;
+                updateModalContent(currentProjIndex, currentImageIndex);
+            } else {
+                currentProjIndex = (currentProjIndex + 1) % projectsData.length;
+                currentImageIndex = 0;
+                updateModalContent(currentProjIndex, currentImageIndex);
+            }
+        });
 
-    // Previous button: cycles backward through sub-images or previous project
-    modalPrev.addEventListener('click', () => {
-        if (currentImageIndex > 0) {
-            currentImageIndex--;
-            updateModalContent(currentProjIndex, currentImageIndex);
-        } else {
-            currentProjIndex = (currentProjIndex - 1 + projectsData.length) % projectsData.length;
-            currentImageIndex = projectsData[currentProjIndex].images.length - 1;
-            updateModalContent(currentProjIndex, currentImageIndex);
-        }
-    });
-});
+        modalPrev.addEventListener('click', () => {
+            if (currentImageIndex > 0) {
+                currentImageIndex--;
+                updateModalContent(currentProjIndex, currentImageIndex);
+            } else {
+                currentProjIndex = (currentProjIndex - 1 + projectsData.length) % projectsData.length;
+                currentImageIndex = projectsData[currentProjIndex].images.length - 1;
+                updateModalContent(currentProjIndex, currentImageIndex);
+            }
+        });
+    }
 
-// Projects Carousel Container Drag Handler
-document.addEventListener('DOMContentLoaded', () => {
+    // ----------------------------------------------------
+    // 4. Carousel Drag-to-Scroll Handler
+    // ----------------------------------------------------
     const projectsSlider = document.getElementById('projectsContainer');
-    let isProjDown = false;
-    let projStartX;
-    let projScrollLeft;
+    if (projectsSlider) {
+        let isProjDown = false;
+        let projStartX;
+        let projScrollLeft;
 
-    projectsSlider.addEventListener('mousedown', (e) => {
-        isProjDown = true;
-        projectsSlider.style.cursor = 'grabbing';
-        projStartX = e.pageX - projectsSlider.offsetLeft;
-        projScrollLeft = projectsSlider.scrollLeft;
-    });
+        projectsSlider.addEventListener('mousedown', (e) => {
+            isProjDown = true;
+            projectsSlider.style.cursor = 'grabbing';
+            projStartX = e.pageX - projectsSlider.offsetLeft;
+            projScrollLeft = projectsSlider.scrollLeft;
+        });
 
-    projectsSlider.addEventListener('mouseleave', () => {
-        isProjDown = false;
-        projectsSlider.style.cursor = 'grab';
-    });
+        projectsSlider.addEventListener('mouseleave', () => {
+            isProjDown = false;
+            projectsSlider.style.cursor = 'grab';
+        });
 
-    projectsSlider.addEventListener('mouseup', () => {
-        isProjDown = false;
-        projectsSlider.style.cursor = 'grab';
-    });
+        projectsSlider.addEventListener('mouseup', () => {
+            isProjDown = false;
+            projectsSlider.style.cursor = 'grab';
+        });
 
-    projectsSlider.addEventListener('mousemove', (e) => {
-        if (!isProjDown) return;
-        e.preventDefault();
-        const x = e.pageX - projectsSlider.offsetLeft;
-        const walk = (x - projStartX) * 2; // Adjust scroll speed multiplier if needed
-        projectsSlider.scrollLeft = projScrollLeft - walk;
-    });
+        projectsSlider.addEventListener('mousemove', (e) => {
+            if (!isProjDown) return;
+            e.preventDefault();
+            const x = e.pageX - projectsSlider.offsetLeft;
+            const walk = (x - projStartX) * 2; 
+            projectsSlider.scrollLeft = projScrollLeft - walk;
+        });
+    }
 });
-// ==========================================
-// //section 7 end here
-// ==========================================

@@ -59,13 +59,10 @@
                 
                 <!-- Sound Toggle Button -->
                 <button id="musicToggleBtn" class="settings-icon" aria-label="Toggle Background Music">
-                    <!-- Sound On Icon (Default State) -->
                     <svg id="soundOnIcon" class="audio-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
                         <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
                     </svg>
-                    
-                    <!-- Sound Off Icon (Hidden by Default) -->
                     <svg id="soundOffIcon" class="audio-icon hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
                         <line x1="23" y1="9" x2="17" y2="15"></line>
@@ -82,10 +79,14 @@
 
         <!-- Hero Content Section -->
         <main class="hero">
-            <h1>Hi, I’m <span>NazirulAziman</span><br><span class="typewriter-text"></span><span class="cursor">|</span></h1>
-            <p class="tagline">~ Building sleek, high-performance web apps with clean code ~</p>
+            <!-- Yellow Circle Element -->
+            <h1 class="hero-title">Hi, I’m <span>NazirulAziman</span><br><span class="typewriter-text"></span><span class="cursor">|</span></h1>
             
-            <div class="btn-container">
+            <!-- Green Circle Element -->
+            <p class="tagline hero-tagline">~ Building sleek, high-performance web apps with clean code ~</p>
+            
+            <!-- Red Circle Element -->
+            <div class="btn-container hero-btn">
                 <a href="https://wa.me/6737283110" target="_blank" class="contact-btn" style="text-decoration: none; display: inline-flex; align-items: center;">
                     CONTACT ME
                     <span class="icon-box" style="display: inline-flex; align-items: center; justify-content: center;">
@@ -112,25 +113,27 @@
     <!-- //Section 3 Start: About Screen -->
     <div class="section-container" id="about">
         <section class="about-section">
-            <h2 class="section-title">About</h2>
+            <h2 class="section-title about-title">About</h2>
             <div class="about-card">
-                <p class="about-subtitle">My Introduction</p>
-                <h3 class="about-heading">Let's check it out</h3>
-                <p class="about-desc">
-                    Front-end developer skilled in web technologies and responsive design, turning creative prototypes into scalable applications and delivering quality work.
-                </p>
+                <div class="about-text-group">
+                    <p class="about-subtitle">My Introduction</p>
+                    <h3 class="about-heading">Let's check it out</h3>
+                    <p class="about-desc">
+                        Front-end developer skilled in web technologies and responsive design, turning creative prototypes into scalable applications and delivering quality work.
+                    </p>
+                </div>
 
                 <div class="stats-grid">
-                    <div class="stat-box">
-                        <div class="stat-number">+3</div>
+                    <div class="stat-box" style="--card-index: 0;">
+                        <div class="stat-number" data-target="3">+3</div>
                         <div class="stat-label">Years<br>Experiences</div>
                     </div>
-                    <div class="stat-box">
-                        <div class="stat-number">+4</div>
+                    <div class="stat-box" style="--card-index: 1;">
+                        <div class="stat-number" data-target="4">+4</div>
                         <div class="stat-label">Work<br>Completed</div>
                     </div>
-                    <div class="stat-box">
-                        <div class="stat-number">+1</div>
+                    <div class="stat-box" style="--card-index: 2;">
+                        <div class="stat-number" data-target="1">+1</div>
                         <div class="stat-label">Award<br>Won</div>
                     </div>
                 </div>
@@ -167,16 +170,16 @@
             <div class="skill-category-group">
                 <span class="skill-category-title">Development & Frameworks</span>
                 <div class="skills-grid">
-                    <div class="skill-item" data-tooltip="HTML5"><span class="tool-text" style="color: #E34F26;">HTML</span></div>
-                    <div class="skill-item" data-tooltip="CSS3"><span class="tool-text" style="color: #1572B6;">CSS</span></div>
-                    <div class="skill-item" data-tooltip="JavaScript"><span class="tool-text" style="color: #F7DF1E;">JS</span></div>
-                    <div class="skill-item" data-tooltip="AJAX"><span class="tool-text" style="color: #00e5ff; font-size: 0.7rem;">AJAX</span></div>
-                    <div class="skill-item" data-tooltip="PHP"><span class="tool-text" style="color: #777BB4;">PHP</span></div>
-                    <div class="skill-item" data-tooltip="CodeIgniter"><span class="tool-text" style="color: #EE4323; font-size: 0.75rem;">CI</span></div>
-                    <div class="skill-item" data-tooltip="WordPress"><span class="tool-text" style="color: #21759B; font-size: 0.75rem;">WP</span></div>
-                    <div class="skill-item" data-tooltip="Angular JS"><span class="tool-text" style="color: #DD0031; font-size: 0.75rem;">Ng</span></div>
-                    <div class="skill-item" data-tooltip="React Native"><span class="tool-text" style="color: #61DAFB; font-size: 0.75rem;">React</span></div>
-                    <div class="skill-item" data-tooltip="Ionic"><span class="tool-text" style="color: #3880ff; font-size: 0.7rem;">Ionic</span></div>
+                    <div class="skill-item" data-tooltip="HTML5" style="--item-index: 1;"><span class="tool-text" style="color: #E34F26;">HTML</span></div>
+                    <div class="skill-item" data-tooltip="CSS3" style="--item-index: 2;"><span class="tool-text" style="color: #1572B6;">CSS</span></div>
+                    <div class="skill-item" data-tooltip="JavaScript" style="--item-index: 3;"><span class="tool-text" style="color: #F7DF1E;">JS</span></div>
+                    <div class="skill-item" data-tooltip="AJAX" style="--item-index: 4;"><span class="tool-text" style="color: #00e5ff; font-size: 0.7rem;">AJAX</span></div>
+                    <div class="skill-item" data-tooltip="PHP" style="--item-index: 5;"><span class="tool-text" style="color: #777BB4;">PHP</span></div>
+                    <div class="skill-item" data-tooltip="CodeIgniter" style="--item-index: 6;"><span class="tool-text" style="color: #EE4323; font-size: 0.75rem;">CI</span></div>
+                    <div class="skill-item" data-tooltip="WordPress" style="--item-index: 7;"><span class="tool-text" style="color: #21759B; font-size: 0.75rem;">WP</span></div>
+                    <div class="skill-item" data-tooltip="Angular JS" style="--item-index: 8;"><span class="tool-text" style="color: #DD0031; font-size: 0.75rem;">Ng</span></div>
+                    <div class="skill-item" data-tooltip="React Native" style="--item-index: 9;"><span class="tool-text" style="color: #61DAFB; font-size: 0.75rem;">React</span></div>
+                    <div class="skill-item" data-tooltip="Ionic" style="--item-index: 10;"><span class="tool-text" style="color: #3880ff; font-size: 0.7rem;">Ionic</span></div>
                 </div>
             </div>
 
@@ -184,15 +187,15 @@
             <div class="skill-category-group" style="margin-top: 20px;">
                 <span class="skill-category-title">Design & Multimedia Suite</span>
                 <div class="skills-grid">
-                    <div class="skill-item" data-tooltip="Figma"><span class="tool-text" style="color: #F24E1E; font-size: 0.75rem;">Figma</span></div>
-                    <div class="skill-item" data-tooltip="Adobe Photoshop"><span class="tool-text" style="color: #31A8FF;">Ps</span></div>
-                    <div class="skill-item" data-tooltip="Adobe InDesign"><span class="tool-text" style="color: #FF3366;">Id</span></div>
-                    <div class="skill-item" data-tooltip="Adobe Premiere"><span class="tool-text" style="color: #9999FF;">Pr</span></div>
-                    <div class="skill-item" data-tooltip="Adobe After Effects"><span class="tool-text" style="color: #CC99FF;">Ae</span></div>
-                    <div class="skill-item" data-tooltip="Adobe Lightroom"><span class="tool-text" style="color: #3399FF;">Lr</span></div>
-                    <div class="skill-item" data-tooltip="Adobe Dreamweaver"><span class="tool-text" style="color: #FF9900;">Dw</span></div>
-                    <div class="skill-item" data-tooltip="Canva"><span class="tool-text" style="color: #00C4CC;">Cv</span></div>
-                    <div class="skill-item" data-tooltip="Microsoft Office"><span class="tool-text" style="color: #107C41; font-size: 0.75rem;">Office</span></div>
+                    <div class="skill-item" data-tooltip="Figma" style="--item-index: 11;"><span class="tool-text" style="color: #F24E1E; font-size: 0.75rem;">Figma</span></div>
+                    <div class="skill-item" data-tooltip="Adobe Photoshop" style="--item-index: 12;"><span class="tool-text" style="color: #31A8FF;">Ps</span></div>
+                    <div class="skill-item" data-tooltip="Adobe InDesign" style="--item-index: 13;"><span class="tool-text" style="color: #FF3366;">Id</span></div>
+                    <div class="skill-item" data-tooltip="Adobe Premiere" style="--item-index: 14;"><span class="tool-text" style="color: #9999FF;">Pr</span></div>
+                    <div class="skill-item" data-tooltip="Adobe After Effects" style="--item-index: 15;"><span class="tool-text" style="color: #CC99FF;">Ae</span></div>
+                    <div class="skill-item" data-tooltip="Adobe Lightroom" style="--item-index: 16;"><span class="tool-text" style="color: #3399FF;">Lr</span></div>
+                    <div class="skill-item" data-tooltip="Adobe Dreamweaver" style="--item-index: 17;"><span class="tool-text" style="color: #FF9900;">Dw</span></div>
+                    <div class="skill-item" data-tooltip="Canva" style="--item-index: 18;"><span class="tool-text" style="color: #00C4CC;">Cv</span></div>
+                    <div class="skill-item" data-tooltip="Microsoft Office" style="--item-index: 19;"><span class="tool-text" style="color: #107C41; font-size: 0.75rem;">Office</span></div>
                 </div>
             </div>
         </section>
@@ -223,11 +226,11 @@
                 <div class="experience-track" id="expTrack">
                     
                     <!-- Experience Item 1 -->
-                    <div class="exp-card">
+                    <div class="exp-card" style="--card-index: 1;">
                         <div class="exp-header">
                             <div>
                                 <h3 class="exp-role">Web Developer</h3>
-                                <p class="exp-company">Mint Brunei <span class="exp-type">• Full-time</span></p>
+                                <p class="exp-company">Mint Brunei <span class="exp-type">Full-time</span></p>
                             </div>
                             <span class="exp-date">Feb 2024 - Jul 2025</span>
                         </div>
@@ -243,11 +246,11 @@
                     </div>
 
                     <!-- Experience Item 2 -->
-                    <div class="exp-card">
+                    <div class="exp-card" style="--card-index: 2;">
                         <div class="exp-header">
                             <div>
                                 <h3 class="exp-role">Web Developer</h3>
-                                <p class="exp-company">Mindtrex Academy <span class="exp-type">• Part-time</span></p>
+                                <p class="exp-company">Mindtrex Academy <span class="exp-type">Part-time</span></p>
                             </div>
                             <span class="exp-date">Aug 2023 - Jan 2024</span>
                         </div>
@@ -265,11 +268,11 @@
                     </div>
 
                     <!-- Experience Item 3 -->
-                    <div class="exp-card">
+                    <div class="exp-card" style="--card-index: 3;">
                         <div class="exp-header">
                             <div>
                                 <h3 class="exp-role">Marketing Team</h3>
-                                <p class="exp-company">Shell LiveWIRE Brunei <span class="exp-type">• Internship</span></p>
+                                <p class="exp-company">Shell LiveWIRE Brunei <span class="exp-type">Internship</span></p>
                             </div>
                             <span class="exp-date">Jan 2023 - Jun 2023</span>
                         </div>
@@ -286,11 +289,11 @@
                     </div>
 
                     <!-- Experience Item 4 -->
-                    <div class="exp-card">
+                    <div class="exp-card" style="--card-index: 4;">
                         <div class="exp-header">
                             <div>
                                 <h3 class="exp-role">IT Technician</h3>
-                                <p class="exp-company">Wira Juta Sdn Bhd <span class="exp-type">• Full-time</span></p>
+                                <p class="exp-company">Wira Juta Sdn Bhd <span class="exp-type">Full-time</span></p>
                             </div>
                             <span class="exp-date">Aug 2019 - Jul 2020</span>
                         </div>
@@ -305,11 +308,11 @@
                     </div>
 
                     <!-- Experience Item 5 -->
-                    <div class="exp-card">
+                    <div class="exp-card" style="--card-index: 5;">
                         <div class="exp-header">
                             <div>
                                 <h3 class="exp-role">IT Support Technician</h3>
-                                <p class="exp-company">DXC Technology <span class="exp-type">• Internship</span></p>
+                                <p class="exp-company">DXC Technology <span class="exp-type">Internship</span></p>
                             </div>
                             <span class="exp-date">Jan 2019 - Apr 2019</span>
                         </div>
@@ -331,15 +334,6 @@
                 <span>&larr; Slide to see more &rarr;</span>
             </div>
         </section>
-        
-        <!-- Scroll Down Indicator -->
-        <div class="scroll-down">
-            <button class="arrow-btn" id="scrollArrow" aria-label="Scroll down">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-            </button>
-        </div>
     </div>
     <!-- //Section 5 end -->
 
@@ -347,41 +341,56 @@
     <!-- //Section 6 Start: Awards & Achievements -->
     <div class="section-container" id="awards">
         <section class="awards-section">
-            <h2 class="section-title" style="text-align: center;">Awards</h2>
+            <h2 class="section-title" style="text-align: center;">Awards & Achievements</h2>
             <div class="awards-grid">
                 
-                <!-- Award Card -->
+                <!-- Award Card (Two-Column Storytelling Layout) -->
                 <div class="award-card">
-                    <div class="award-header">
-                        <div>
-                            <span class="award-badge">First Runner Up</span>
+                    <div class="award-main-layout">
+                        
+                        <!-- Left Side: Storytelling & Details -->
+                        <div class="award-story-side">
+                            <div class="award-header">
+                                <span class="award-badge">First Runner Up</span>
+                                <span class="award-date">Dec 2021</span>
+                            </div>
                             <h3 class="award-title">Brunei Coding Conquest 2021</h3>
                             <p class="award-org">Team 6: Kenali Makanan Kitani • Co-hosted by UTB</p>
-                        </div>
-                        <span class="award-date">Dec 2021</span>
-                    </div>
+                            
+                            <div class="award-story-box">
+                                <h4 class="story-heading">The Journey & Challenge</h4>
+                                <p class="award-description">
+                                    Competed in a rigorous national coding competition held in conjunction with the <strong>Brunei December Festival 2021</strong>, supported by industry leaders like BSP and UNN. 
+                                </p>
+                                <p class="award-description">
+                                    Working alongside peers in Team 6 under intense time constraints, we conceptualized and built an innovative prototype platform. Pitching and presenting our working solution directly to panels of data science and tech professionals was a defining milestone in my development journey.
+                                </p>
+                            </div>
 
-                    <!-- Award Proof Images Container -->
-                    <div class="award-images-grid">
-                        <!-- Image 1 -->
-                        <div class="award-image-container modal-trigger">
-                            <img src="award_sc.png" alt="Winner Announcement" class="award-img">
-                            <div class="img-overlay-hint"><i class="fas fa-expand"></i> Winner Photo</div>
+                            <div class="award-footer">
+                                <span class="skill-tag">Team Collaboration</span>
+                                <span class="skill-tag">Problem Solving</span>
+                                <span class="skill-tag">Coding & Development</span>
+                            </div>
                         </div>
-                        <!-- Image 2 -->
-                        <div class="award-image-container modal-trigger">
-                            <img src="completion.png" alt="Award Certificate" class="award-img">
-                            <div class="img-overlay-hint"><i class="fas fa-expand"></i> Certificate</div>
-                        </div>
-                    </div>
 
-                    <p class="award-description">
-                        Competed in a rigorous national coding competition held in conjunction with the Brunei December Festival 2021 and supported by industry leaders like BSP and UNN. Developed a solution under Team 6 alongside peers and presented to data science and tech professionals.
-                    </p>
-                    <div class="award-footer">
-                        <span class="skill-tag">Team Collaboration</span>
-                        <span class="skill-tag">Problem Solving</span>
-                        <span class="skill-tag">Coding & Development</span>
+                        <!-- Right Side: Interactive Proof Images -->
+                        <div class="award-visual-side">
+                            <div class="award-images-grid">
+                                <!-- Image 1 -->
+                                <div class="award-image-container modal-trigger">
+                                    <img src="award_sc.png" alt="Winner Announcement" class="award-img">
+                                    <div class="img-overlay-hint"><i class="fas fa-expand"></i> Winner Photo</div>
+                                </div>
+                                <!-- Image 2 -->
+                                <div class="award-image-container modal-trigger">
+                                    <img src="completion.png" alt="Award Certificate" class="award-img">
+                                    <div class="img-overlay-hint"><i class="fas fa-expand"></i> Certificate</div>
+                                </div>
+                            </div>
+                            <p class="image-caption"><i class="fas fa-info-circle"></i> Click any proof to expand view</p>
+                        </div>
+
                     </div>
                 </div>
 
@@ -400,72 +409,104 @@
     <!-- //Section 7 Start: Personal Projects Screen -->
     <div class="section-container" id="projects">
         <section class="projects-section">
-            <h2 class="section-title">Personal Project</h2>
+            <div class="section-header-wrap">
+                <span class="section-subtitle">Portfolio & Milestones</span>
+                <h2 class="section-title">Personal & Professional Works</h2>
+                <p class="section-desc">A curated timeline of mobile applications crafted during my college creative journey and enterprise web solutions built during my time at MindTrex Academy.</p>
+            </div>
             
             <!-- Category Filter Pills -->
             <div class="project-filters">
                 <button class="filter-btn active" data-filter="all">All Works</button>
-                <button class="filter-btn" data-filter="app">Mobile Application</button>
-                <button class="filter-btn" data-filter="web">Website</button>
+                <button class="filter-btn" data-filter="app">Mobile Application (College)</button>
+                <button class="filter-btn" data-filter="web">Enterprise / Web (MindTrex)</button>
             </div>
 
             <!-- Projects Carousel / Grid Container -->
             <div class="projects-carousel-container" id="projectsContainer">
                 <div class="projects-track">
                     
-                    <!-- Project Card: DeClutter -->
+                    <!-- Project Card 1: DeClutter -->
                     <div class="project-card active-project" 
                         data-category="app" 
-                        data-images="/project/declutter1.png, /project/declutter2.png, /project/declutter3.png, /project/declutter4.png" 
-                        data-details="Developed a peer-to-peer mobile marketplace platform dedicated to pre-owned fashion, empowering users to seamlessly buy and sell second-hand clothes. Handled end-to-end design and architecture—including user flow mapping, UI/UX wireframing in Figma, item listing flows, category filters, and secure user profiles—all optimized with accessible typography and clean dark-mode contrast.">
+                        data-images="/project/declutter0.png, /project/declutter1.png, /project/declutter2.png, /project/declutter3.png, /project/declutter4.png" 
+                        data-context="College Innovation Project • Solo Developer & Designer"
+                        data-status="Case Study / Confidential Concept"
+                        data-details="DeClutter was conceptualized and prototyped during my college years to tackle fast-fashion waste. I engineered a peer-to-peer mobile marketplace platform dedicated to pre-owned fashion. Handled end-to-end design and architecture—including user flow mapping, UI/UX wireframing in Figma, item listing logic, category filtering, and secure user profiles—all optimized with accessible typography and high-contrast dark mode aesthetics. (Live link restricted due to academic archive status).">
+                        <div class="project-badge">College Archive</div>
                         <div class="project-img-box">
                             <img src="/project/declutter0.png" alt="DeClutter Mobile Marketplace App" class="project-img">
+                            <div class="img-overlay-hint"><span>Click for Case Study</span></div>
                         </div>
                         <div class="project-info">
-                            <h3>Mobile Application: DeClutter</h3>
-                            <p>A peer-to-peer mobile marketplace application designed for users to easily buy and sell pre-owned clothing items.</p>
+                            <h3>DeClutter Marketplace</h3>
+                            <p class="project-tagline">Sustainable peer-to-peer fashion trading mobile app.</p>
+                            <div class="tech-tags">
+                                <span>Figma</span><span>UI/UX</span><span>Mobile App</span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Project Card: Twitdown -->
+                    <!-- Project Card 2: Twitdown -->
                     <div class="project-card active-project" 
                         data-category="app" 
-                        data-images="/project/twitdown.png, /project/twitdown1.png" 
-                        data-details="Designed a comprehensive mobile application UI/UX architecture from the ground up. Handled rigorous user flow mapping and wireframing in Figma covering multiple interactive states—including authentication (login/signup), home feeds, interactive menus, user profiles, editing states, and direct messaging screens. Styled with accessible typography and a clean, immersive dark-mode aesthetic.">
+                        data-images="/project/twitdown1.png, /project/twitdown.png" 
+                        data-context="College UI/UX Design Exercise • Advanced Prototyping"
+                        data-status="Design System Concept"
+                        data-details="Designed as a comprehensive mobile application UI/UX architecture from the ground up during my undergraduate studies. Handled rigorous user flow mapping and wireframing in Figma covering multiple interactive states—including complex authentication flows (login/signup), dynamic home feeds, sliding navigation drawers, user profiles, editing states, and real-time direct messaging screens. Styled with deep immersive dark-mode gradients.">
+                        <div class="project-badge">College Archive</div>
                         <div class="project-img-box">
                             <img src="/project/twitdown1.png" alt="Twitdown Mobile App UI" class="project-img">
+                            <div class="img-overlay-hint"><span>Click for Case Study</span></div>
                         </div>
                         <div class="project-info">
-                            <h3>Mobile Application: Twitdown</h3>
-                            <p>A comprehensive mobile application UI design featuring multi-state navigation, authentication flows, user profiles, and direct messaging screens.</p>
+                            <h3>Twitdown Social Suite</h3>
+                            <p class="project-tagline">Multi-state interactive mobile experience architecture.</p>
+                            <div class="tech-tags">
+                                <span>UI/UX Design</span><span>Prototyping</span><span>Dark Mode</span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Project Card: Grillzen -->
+                    <!-- Project Card 3: Grillzen -->
                     <div class="project-card active-project" 
                         data-category="app" 
-                        data-images="/project/grillzen.png, /project/grillzen1.png" 
-                        data-details="Built my very first mobile application using the Ionic framework, centered around a seamless food-ordering theme. Handled end-to-end development, including user interface design, food catalog browsing, cart management flows, and responsive mobile component integration.">
+                        data-images="/project/grillzen0.png, /project/grillzen.png, /project/grillzen1.png" 
+                        data-context="First Mobile Engineering Milestone • College Project"
+                        data-status="Academic Prototype"
+                        data-details="Grillzen marks my foundational transition into mobile engineering. Built using the Ionic framework, this food-ordering application was crafted to master cross-platform paradigms. I managed end-to-end development, including responsive layout configuration, food catalog browsing trees, interactive cart state handlers, and seamless touch-friendly component integration.">
+                        <div class="project-badge">College Milestone</div>
                         <div class="project-img-box">
                             <img src="/project/grillzen0.png" alt="Grillzen Food Ordering App" class="project-img">
+                            <div class="img-overlay-hint"><span>Click for Case Study</span></div>
                         </div>
                         <div class="project-info">
-                            <h3>Mobile Application: Grillzen</h3>
-                            <p>A food-ordering mobile application built using the Ionic framework for a smooth cross-platform ordering experience.</p>
+                            <h3>Grillzen Food App</h3>
+                            <p class="project-tagline">Cross-platform food ordering system built with Ionic.</p>
+                            <div class="tech-tags">
+                                <span>Ionic</span><span>Cross-Platform</span><span>Mobile Dev</span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Project Card: Islamic Mind -->
+                    <!-- Project Card 4: Islamic Mind -->
                     <div class="project-card active-project" 
                         data-category="web" 
-                        data-images="/project/im1.png, /project/im2.png, /project/im3.png, /project/im4.png" 
-                        data-details="Developed during my time at MindTrex Academy in collaboration with an overseas programmer from Indonesia via Google Meet and Zoom video conferences. Built as an educational web application tailored for children to explore interactive learning content. Handled system architecture, UI implementation, and cross-border code integration.">
+                        data-images="/project/im.png, /project/im1.png, /project/im2.png, /project/im3.png, /project/im4.png" 
+                        data-context="Professional Collaboration • MindTrex Academy"
+                        data-status="NDA Protected / Enterprise Collaboration"
+                        data-details="Developed during my tenure at MindTrex Academy through high-level cross-border teamwork. Collaborated daily with an overseas programmer based in Indonesia via Google Meet and Zoom video syncs to build an immersive educational web application tailored for children. Handled system architecture structuring, frontend UI execution, and synchronized remote code integration across distributed repositories.">
+                        <div class="project-badge professional-badge">MindTrex Academy</div>
                         <div class="project-img-box">
                             <img src="/project/im.png" alt="Islamic Mind Web Application" class="project-img">
+                            <div class="img-overlay-hint"><span>Click for Case Study</span></div>
                         </div>
                         <div class="project-info">
-                            <h3>Web Application: Islamic Mind</h3>
-                            <p>An interactive educational web application designed for children, built through cross-border team collaboration.</p>
+                            <h3>Islamic Mind Web App</h3>
+                            <p class="project-tagline">Interactive educational kids platform built via cross-border collaboration.</p>
+                            <div class="tech-tags">
+                                <span>Web App</span><span>Remote Collaboration</span><span>EdTech</span>
+                            </div>
                         </div>
                     </div>
 
@@ -474,7 +515,7 @@
 
             <!-- Slide Hint Indicator -->
             <div class="slide-hint">
-                <span>&larr; Slide to see more &rarr;</span>
+                <span>&larr; Drag or scroll horizontally to explore more works &rarr;</span>
             </div>
         </section>
     </div>
