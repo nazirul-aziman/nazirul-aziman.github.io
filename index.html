@@ -202,12 +202,7 @@
 
         <!-- Scrolling Ticker Bar at the Bottom -->
         <div class="ticker-container">
-            <div class="ticker-track">
-                <span class="ticker-item"><i class="fa-solid fa-sparkles"></i> IT Technician</span>
-                <span class="ticker-item"><i class="fa-solid fa-sparkles"></i> Graphic Designer</span>
-                <span class="ticker-item"><i class="fa-solid fa-sparkles"></i> Web Developer</span>
-                <span class="ticker-item"><i class="fa-solid fa-sparkles"></i> UI/UX Specialist</span>
-                <!-- Duplicate for infinite seamless scroll loop -->
+            <div class="ticker-track" id="tickerTrack">
                 <span class="ticker-item"><i class="fa-solid fa-sparkles"></i> IT Technician</span>
                 <span class="ticker-item"><i class="fa-solid fa-sparkles"></i> Graphic Designer</span>
                 <span class="ticker-item"><i class="fa-solid fa-sparkles"></i> Web Developer</span>
@@ -241,6 +236,7 @@
                             <li>Work together with graphic designers to incorporate front end elements.</li>
                         </ul>
                         <div class="exp-skills">
+                            <span class="exp-role">01</span>
                             <span class="skill-tag">WordPress</span>
                         </div>
                     </div>
@@ -261,6 +257,7 @@
                             <li>Collaborate with back end developers to integrate front end components.</li>
                         </ul>
                         <div class="exp-skills">
+                            <span class="exp-role">02</span>
                             <span class="skill-tag">Trello</span>
                             <span class="skill-tag">Photography</span>
                             <span class="skill-tag">CodeIgniter</span>
@@ -283,6 +280,7 @@
                             <li>Enroll in company training programs including Leadership Camp and Masterclasses.</li>
                         </ul>
                         <div class="exp-skills">
+                            <span class="exp-role">03</span>
                             <span class="skill-tag">Graphic Design</span>
                             <span class="skill-tag">Photography</span>
                         </div>
@@ -303,6 +301,7 @@
                             <li>Perform installation and maintenance of RFID devices and hardware troubleshooting.</li>
                         </ul>
                         <div class="exp-skills">
+                            <span class="exp-role">04</span>
                             <span class="skill-tag">Technical Support</span>
                         </div>
                     </div>
@@ -323,6 +322,7 @@
                             <li>Help with network hardware maintenance such as firewalls and switches.</li>
                         </ul>
                         <div class="exp-skills">
+                            <span class="exp-role">05</span>
                             <span class="skill-tag">IT Networking</span>
                         </div>
                     </div>
@@ -352,7 +352,6 @@
                         <div class="award-story-side">
                             <div class="award-header">
                                 <span class="award-badge">First Runner Up</span>
-                                <span class="award-date">Dec 2021</span>
                             </div>
                             <h3 class="award-title">Brunei Coding Conquest 2021</h3>
                             <p class="award-org">Team 6: Kenali Makanan Kitani • Co-hosted by UTB</p>
@@ -412,7 +411,7 @@
             <div class="section-header-wrap">
                 <span class="section-subtitle">Portfolio & Milestones</span>
                 <h2 class="section-title">Personal & Professional Works</h2>
-                <p class="section-desc">A curated timeline of mobile applications crafted during my college creative journey and enterprise web solutions built during my time at MindTrex Academy.</p>
+                <p class="section-desc">A curated timeline of mobile applications crafted during my academic journey and enterprise web solutions built through collaborative team engineering.</p>
             </div>
             
             <!-- Category Filter Pills -->
@@ -429,10 +428,12 @@
                     <!-- Project Card 1: DeClutter -->
                     <div class="project-card active-project" 
                         data-category="app" 
-                        data-images="/project/declutter0.png, /project/declutter1.png, /project/declutter2.png, /project/declutter3.png, /project/declutter4.png" 
-                        data-context="College Innovation Project • Solo Developer & Designer"
+                        data-images="/project/declutter0.png, /project/declutter1.jpg" 
+                        data-context="College Innovation Project • Core Frontend & UI/UX Developer"
                         data-status="Case Study / Confidential Concept"
-                        data-details="DeClutter was conceptualized and prototyped during my college years to tackle fast-fashion waste. I engineered a peer-to-peer mobile marketplace platform dedicated to pre-owned fashion. Handled end-to-end design and architecture—including user flow mapping, UI/UX wireframing in Figma, item listing logic, category filtering, and secure user profiles—all optimized with accessible typography and high-contrast dark mode aesthetics. (Live link restricted due to academic archive status).">
+                        data-challenge="Fast-fashion waste is accelerating at an alarming rate, and existing secondhand marketplaces lack seamless, intuitive mobile interfaces tailored specifically for peer-to-peer apparel trading."
+                        data-approach="Collaborated closely within our student development team to architect a sustainable pre-owned fashion platform. I focused on end-to-end UI/UX wireframing in Figma, building fluid navigation flows, item listing logic, category filtering systems, and secure user profile screens with accessible high-contrast dark mode aesthetics."
+                        data-outcome="Successfully delivered a fully interactive mobile application prototype that bridged sustainability goals with clean, user-friendly architecture, earning high academic commendation.">
                         <div class="project-badge">College Archive</div>
                         <div class="project-img-box">
                             <img src="/project/declutter0.png" alt="DeClutter Mobile Marketplace App" class="project-img">
@@ -450,10 +451,12 @@
                     <!-- Project Card 2: Twitdown -->
                     <div class="project-card active-project" 
                         data-category="app" 
-                        data-images="/project/twitdown1.png, /project/twitdown.png" 
-                        data-context="College UI/UX Design Exercise • Advanced Prototyping"
+                        data-images="/project/twitdown1.jpg, /project/twitdown.jpg" 
+                        data-context="College UI/UX Design Exercise • Collaborative Prototyping Lead"
                         data-status="Design System Concept"
-                        data-details="Designed as a comprehensive mobile application UI/UX architecture from the ground up during my undergraduate studies. Handled rigorous user flow mapping and wireframing in Figma covering multiple interactive states—including complex authentication flows (login/signup), dynamic home feeds, sliding navigation drawers, user profiles, editing states, and real-time direct messaging screens. Styled with deep immersive dark-mode gradients.">
+                        data-challenge="Modern social platforms often suffer from cluttered interfaces, jarring state changes, and inconsistent dark-mode hierarchies that degrade user immersion."
+                        data-approach="Partnered with peers to conceptualize and build a comprehensive multi-state mobile social architecture from the ground up. Handled rigorous user flow mapping and advanced interactive prototyping in Figma covering complex authentication flows, dynamic home feeds, sliding navigation drawers, editing states, and real-time DM screens."
+                        data-outcome="Established a cohesive dark-mode design system and component library that streamlined user interactions and set a high benchmark for responsive mobile UI structuring.">
                         <div class="project-badge">College Archive</div>
                         <div class="project-img-box">
                             <img src="/project/twitdown1.png" alt="Twitdown Mobile App UI" class="project-img">
@@ -471,10 +474,12 @@
                     <!-- Project Card 3: Grillzen -->
                     <div class="project-card active-project" 
                         data-category="app" 
-                        data-images="/project/grillzen0.png, /project/grillzen.png, /project/grillzen1.png" 
-                        data-context="First Mobile Engineering Milestone • College Project"
+                        data-images="/project/grillzen0.png, /project/grillzen1.jpg" 
+                        data-context="First Mobile Engineering Milestone • Team Developer"
                         data-status="Academic Prototype"
-                        data-details="Grillzen marks my foundational transition into mobile engineering. Built using the Ionic framework, this food-ordering application was crafted to master cross-platform paradigms. I managed end-to-end development, including responsive layout configuration, food catalog browsing trees, interactive cart state handlers, and seamless touch-friendly component integration.">
+                        data-challenge="Transitioning from traditional web layouts to cross-platform mobile environments presents steep learning curves regarding touch responsiveness, cart state management, and device performance."
+                        data-approach="Worked collaboratively using the Ionic framework to build a robust food-ordering application. Contributed heavily to responsive grid configuration, food catalog browsing trees, interactive cart state handlers, and smooth touch-friendly component integration across iOS and Android viewports."
+                        data-outcome="Delivered a fully functional cross-platform academic prototype that solidified our team's mastery over hybrid mobile development paradigms and state preservation.">
                         <div class="project-badge">College Milestone</div>
                         <div class="project-img-box">
                             <img src="/project/grillzen0.png" alt="Grillzen Food Ordering App" class="project-img">
@@ -493,9 +498,11 @@
                     <div class="project-card active-project" 
                         data-category="web" 
                         data-images="/project/im.png, /project/im1.png, /project/im2.png, /project/im3.png, /project/im4.png" 
-                        data-context="Professional Collaboration • MindTrex Academy"
+                        data-context="Professional Collaboration • MindTrex Academy Developer"
                         data-status="NDA Protected / Enterprise Collaboration"
-                        data-details="Developed during my tenure at MindTrex Academy through high-level cross-border teamwork. Collaborated daily with an overseas programmer based in Indonesia via Google Meet and Zoom video syncs to build an immersive educational web application tailored for children. Handled system architecture structuring, frontend UI execution, and synchronized remote code integration across distributed repositories.">
+                        data-challenge="Building engaging, high-performance educational web applications for children requires balancing rich interactive media with clean code maintainability across distributed remote teams."
+                        data-approach="Participated in high-level cross-border teamwork during my tenure at MindTrex Academy. Collaborated daily with an overseas programmer based in Indonesia via Google Meet and Zoom video syncs, aligning system architecture, executing frontend UI components, and managing synchronized remote code integration across shared repositories."
+                        data-outcome="Successfully deployed a robust, immersive edtech web application that met enterprise production standards and demonstrated seamless international developer collaboration.">
                         <div class="project-badge professional-badge">MindTrex Academy</div>
                         <div class="project-img-box">
                             <img src="/project/im.png" alt="Islamic Mind Web Application" class="project-img">
@@ -533,28 +540,56 @@
                 <h3 id="modalTitle">Project Title</h3>
                 <p id="modalCategory" class="modal-category">Category</p>
                 
-                <div class="modal-img-container">
-                    <img id="modalImg" src="" alt="Project Full View" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
+                <!-- Picture Remains Still at the Top -->
+                <div class="modal-img-container" id="modalImgContainer" style="position: relative; width: 100%; max-height: 400px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.4); border-radius: 10px; overflow: hidden; cursor: none; flex-shrink: 0;">
+                    <img id="modalImg" src="" alt="Project Full View" style="width: 100%; height: 100%; object-fit: contain; border-radius: 10px;">
+                    
+                    <!-- Magnifier Lens -->
+                    <div class="img-magnifier-lens" id="imgLens" style="position: absolute; width: 130px; height: 130px; border: 2px solid #00e5ff; border-radius: 50%; pointer-events: none; display: none; box-shadow: 0 0 25px rgba(0,229,255,0.5), inset 0 0 15px rgba(0,229,255,0.3); z-index: 10;">
+                        <div style="position: relative; width: 100%; height: 100%; border-radius: 50%; overflow: hidden;">
+                            <img id="lensImg" src="" alt="" style="position: absolute; pointer-events: none; max-width: none; max-height: none;">
+                        </div>
+                        <div class="lens-badge" style="position: absolute; bottom: -4px; right: -4px; background: rgba(13, 40, 50, 0.95); border: 1px solid rgba(0, 229, 255, 0.7); color: #00e5ff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 12px rgba(0, 229, 255, 0.4); z-index: 12;">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        </div>
+                    </div>
                 </div>
-                
-                <p id="modalDesc">Detailed description of the project goes here...</p>
-                
-                <!-- Extra Details Section -->
-                <div class="modal-extra-details">
-                    <h4 style="font-size: 0.9rem; color: #00e5ff; margin-bottom: 6px; font-weight: 600;">Project Execution & Handling:</h4>
-                    <p id="modalDetails" style="font-size: 0.82rem; color: #8cb1b9; line-height: 1.4;"></p>
-                </div>
-            </div> <br>
 
-            <!-- Navigation Buttons inside Modal -->
+                <!-- Only this Info Area Scrolls Up and Down -->
+                <div class="modal-text-scroll-area">
+                    <p id="modalDesc" style="margin-top: 12px; font-weight: 500; color: #a0c4cb;"></p>
+                    
+                    <!-- Storytelling Details Section -->
+                    <div class="modal-storytelling-wrapper" style="display: flex; flex-direction: column; gap: 16px; text-align: left; margin-top: 20px; border-top: 1px solid rgba(0,229,255,0.15); padding-top: 16px;">
+                        
+                        <div class="story-block">
+                            <h4 style="font-size: 0.85rem; color: #00e5ff; margin-bottom: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">1. The Challenge</h4>
+                            <p id="modalChallenge" style="font-size: 0.82rem; color: #8cb1b9; line-height: 1.5;"></p>
+                        </div>
+
+                        <div class="story-block">
+                            <h4 style="font-size: 0.85rem; color: #00e5ff; margin-bottom: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">2. Approach & Team Execution</h4>
+                            <p id="modalApproach" style="font-size: 0.82rem; color: #8cb1b9; line-height: 1.5;"></p>
+                        </div>
+
+                        <div class="story-block">
+                            <h4 style="font-size: 0.85rem; color: #00e5ff; margin-bottom: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">3. Outcomes & Key Takeaways</h4>
+                            <p id="modalOutcome" style="font-size: 0.82rem; color: #8cb1b9; line-height: 1.5;"></p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons inside Modal Content -->
             <div class="modal-nav">
                 <button class="modal-nav-btn" id="modalPrev">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                    Previous
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <span>Previous</span>
                 </button>
                 <button class="modal-nav-btn" id="modalNext">
-                    Next
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>Next</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </button>
             </div>
         </div>

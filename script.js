@@ -59,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentPercentage = 0;
     let isPlaying = false;
 
-    // Helper function to update toggle icon state
     const updateIcons = (playing) => {
         if (playing) {
             soundOffIcon.classList.add('hidden');
@@ -70,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Helper function to play audio
     const startAudio = () => {
         if (!bgAudio) return;
         bgAudio.volume = 0.3;
@@ -82,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
             isPlaying = false;
             updateIcons(false);
 
-            // Fallback: start audio on first user click anywhere if autoplay is blocked
             const startOnInteraction = () => {
                 bgAudio.play().then(() => {
                     isPlaying = true;
@@ -94,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // 1. Preloader Animation Loop
     const loadInterval = setInterval(() => {
         currentPercentage += Math.floor(Math.random() * 5) + 2;
         
@@ -102,12 +98,9 @@ document.addEventListener('DOMContentLoaded', () => {
             currentPercentage = 100;
             clearInterval(loadInterval);
             
-            // 2. Trigger fade-out & start audio RIGHT AFTER splash screen finishes
             setTimeout(() => {
                 preloader.classList.add('fade-out');
-                document.body.classList.add('loaded'); // Triggers main content fade-in
-                
-                // Audio starts here, right when preloader transitions out
+                document.body.classList.add('loaded');
                 startAudio();
             }, 500);
         }
@@ -118,10 +111,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
     }, 60);
 
-    // 3. Manual Navigation Audio Toggle Button Click Handler
     if (musicToggleBtn && bgAudio) {
         musicToggleBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent trigger conflict
+            e.stopPropagation();
             if (isPlaying) {
                 bgAudio.pause();
                 isPlaying = false;
@@ -180,12 +172,10 @@ function deletingEffect() {
 document.addEventListener("DOMContentLoaded", () => {
     typingEffect();
 
-    // Hero Entry / Exit Observer Animation Handler
     const heroElement = document.querySelector('.hero');
     const homeSection = document.getElementById('home');
 
     if (heroElement && homeSection) {
-        // Trigger initial slow entry animation on page reload
         setTimeout(() => {
             heroElement.classList.add('hero-animated');
         }, 50);
@@ -193,10 +183,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Enter: slow blur-to-visible + rise (yellow), burst (green), pop-scale (red)
                     heroElement.classList.add('hero-animated');
                 } else {
-                    // Exit: fast blur-out (yellow/green) and scale down to 0 (red)
                     heroElement.classList.remove('hero-animated');
                 }
             });
@@ -210,7 +198,6 @@ document.getElementById('scrollArrow').addEventListener('click', () => {
     document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
 });
 
-// Updated full-screen wheel snapping system supporting sections
 let currentIndex = 0;
 let isScrolling = false;
 
@@ -250,7 +237,6 @@ document.getElementById('downloadCvBtn').addEventListener('click', () => {
     document.body.removeChild(link);
 });
 
-// Pop-up card animation & Number Counter Observer (re-triggers every time)
 document.addEventListener('DOMContentLoaded', () => {
     const aboutCard = document.querySelector('.about-card');
     const aboutSection = document.getElementById('about');
@@ -260,16 +246,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // 1. Trigger the card, text, stats grid, and button pop-up animations
                 aboutCard.classList.add('visible');
 
-                // 2. Trigger the number counter animation
                 if (!hasAnimated) {
                     statNumbers.forEach(stat => {
                         const target = +stat.getAttribute('data-target');
                         let current = 0;
-                        const duration = 1200; // Animation duration in milliseconds (1.2s)
-                        const stepTime = 30; // Update interval in ms
+                        const duration = 1200;
+                        const stepTime = 30;
                         const steps = duration / stepTime;
                         const increment = target / steps;
 
@@ -286,11 +270,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     hasAnimated = true; 
                 }
             } else {
-                // 3. Reset everything when scrolling away so it animates again next time
                 aboutCard.classList.remove('visible');
                 hasAnimated = false; 
 
-                // Reset numbers back to 0 so the counter can run again
                 statNumbers.forEach(stat => {
                     stat.textContent = '+0';
                 });
@@ -310,7 +292,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // ==========================================
 // //exclusively for section 4 start here (Skills & Tools)
 // ==========================================
-
 document.addEventListener('DOMContentLoaded', () => {
     const skillsSection = document.querySelector('.skills-section');
 
@@ -326,23 +307,43 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, { threshold: 0.1 });
 
+    const tickerTrack = document.getElementById('tickerTrack');
+    if (tickerTrack) {
+        tickerTrack.innerHTML += tickerTrack.innerHTML;
+
+        let scrollPos = 0;
+        const speed = 0.8;
+
+        function step() {
+            scrollPos += speed;
+            const singleSetWidth = tickerTrack.scrollWidth / 2;
+
+            if (scrollPos >= singleSetWidth) {
+                scrollPos = 0;
+            }
+
+            tickerTrack.style.transform = `translateX(-${scrollPos}px)`;
+            requestAnimationFrame(step);
+        }
+
+        requestAnimationFrame(step);
+    }
+
     observer.observe(skillsSection);
 });
-
 // ==========================================
 // //section 4 end here
 // ==========================================
 
 
 // ==========================================
-// //exclusively for section 5 start here (Experience Section Drag, Infinite Ticker & Animation Observer)
+// //exclusively for section 5 start here (Experience Section)
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
     const slider = document.getElementById('expContainer');
     const expTrack = document.getElementById('expTrack');
     const expSection = document.querySelector('.experience-section');
 
-    // 1. Scroll Intersection Observer for Pop-up & Blur Animation
     if (expSection) {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -357,7 +358,6 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(expSection);
     }
 
-    // 2. Seamless Infinite Loop Setup: Clone all experience cards and append them to track
     if (expTrack) {
         const cards = Array.from(expTrack.children);
         cards.forEach(card => {
@@ -376,7 +376,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let lastTime = 0;
     let momentumID;
 
-    // Mouse Drag Interaction
     slider.addEventListener('mousedown', (e) => {
         isDown = true;
         cancelAnimationFrame(momentumID);
@@ -406,11 +405,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const x = e.pageX - slider.offsetLeft;
         const walk = (x - startX) * 1.5;
         
-        // Calculate velocity for smooth glide release
         const now = performance.now();
         const dt = now - lastTime;
         if (dt > 0) {
-            velocity = (e.pageX - lastX) / dt * 15; // smoothness factor
+            velocity = (e.pageX - lastX) / dt * 15;
         }
         lastX = e.pageX;
         lastTime = now;
@@ -418,7 +416,6 @@ document.addEventListener('DOMContentLoaded', () => {
         slider.scrollLeft = scrollLeft - walk;
     });
 
-    // Touch Support for Mobile / Tablets
     slider.addEventListener('touchstart', (e) => {
         cancelAnimationFrame(momentumID);
         startX = e.touches[0].pageX - slider.offsetLeft;
@@ -446,19 +443,14 @@ document.addEventListener('DOMContentLoaded', () => {
         startMomentum();
     });
 
-    // Smooth Momentum Glide Function with Infinite Boundary Correction
     function startMomentum() {
         if (Math.abs(velocity) < 0.1) return;
         slider.scrollLeft -= velocity;
-        velocity *= 0.92; // Friction decay rate
-
-        // Infinite loop check for momentum
+        velocity *= 0.92;
         checkInfiniteScroll();
-
         momentumID = requestAnimationFrame(startMomentum);
     }
 
-    // Check and loop scroll position seamlessly
     function checkInfiniteScroll() {
         const maxScroll = expTrack.scrollWidth / 2;
         if (slider.scrollLeft >= maxScroll) {
@@ -468,8 +460,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Very Slow Continuous Ticker Auto-Scroll Animation
-    let tickerSpeed = 0.35; // Adjust speed (lower = slower)
+    let tickerSpeed = 0.35;
     let tickerInterval = setInterval(() => {
         if (!isDown) {
             slider.scrollLeft += tickerSpeed;
@@ -477,7 +468,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, 30);
 
-    // Pause auto-scroll when user hovers or interacts
     slider.addEventListener('mouseenter', () => {
         clearInterval(tickerInterval);
     });
@@ -498,12 +488,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // ==========================================
-// //exclusively for section 6 start here (Awards Scroll Observer & Lightbox Modal)
+// //exclusively for section 6 start here (Awards & Modal)
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
     const awardsSection = document.querySelector('.awards-section');
 
-    // Scroll Observer for Blur & Pop-up Animation
     if (awardsSection) {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -518,7 +507,6 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(awardsSection);
     }
 
-    // Modal Lightbox Functionality
     const modal = document.getElementById('imageModal');
     const modalImg = document.getElementById('expandedImg');
     const closeModalBtn = document.getElementById('closeModalBtn');
@@ -554,28 +542,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // ==========================================
-// Section 7 Scroll Animation & Interactivity Logic
+// Section 7 Scroll Animation & Storytelling Modal Logic
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ----------------------------------------------------
-    // 1. Scroll-Triggered Re-animating Blur-to-Clear & Pop-Up
-    // ----------------------------------------------------
     const projectsSection = document.querySelector('.projects-section');
 
     if (projectsSection) {
         const observerOptions = {
             root: null,
-            threshold: 0.15 // Triggers when 15% of the section is in view
+            threshold: 0.15
         };
 
         const sectionObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Add class to animate into clear view
                     entry.target.classList.add('is-visible');
                 } else {
-                    // Remove class when scrolling away so it resets for the next scroll
                     entry.target.classList.remove('is-visible');
                 }
             });
@@ -584,9 +567,6 @@ document.addEventListener('DOMContentLoaded', () => {
         sectionObserver.observe(projectsSection);
     }
 
-    // ----------------------------------------------------
-    // 2. Personal Projects Filters Logic
-    // ----------------------------------------------------
     const filterBtns = document.querySelectorAll('.filter-btn');
     const projectCards = document.querySelectorAll('.project-card');
 
@@ -599,7 +579,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             projectCards.forEach(card => {
                 const category = card.getAttribute('data-category');
-                card.style.transitionDelay = '0s'; // reset delay for filtering
+                card.style.transitionDelay = '0s';
 
                 if (filterValue === 'all' || category === filterValue) {
                     card.style.display = 'block';
@@ -611,7 +591,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Interactive Card Selection Highlighting
     projectCards.forEach(card => {
         card.addEventListener('click', () => {
             projectCards.forEach(c => c.classList.remove('active-project'));
@@ -619,15 +598,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ----------------------------------------------------
-    // 3. Modal & Dynamic Data Handling
-    // ----------------------------------------------------
+    // Modal Storytelling & Dynamic Data Handling
     const projectModal = document.getElementById('projectModal');
     const modalClose = document.getElementById('modalClose');
     const modalTitle = document.getElementById('modalTitle');
     const modalCategory = document.getElementById('modalCategory');
     const modalDesc = document.getElementById('modalDesc');
-    const modalDetails = document.getElementById('modalDetails');
+    const modalChallenge = document.getElementById('modalChallenge');
+    const modalApproach = document.getElementById('modalApproach');
+    const modalOutcome = document.getElementById('modalOutcome');
     const modalImg = document.getElementById('modalImg');
     const modalNext = document.getElementById('modalNext');
     const modalPrev = document.getElementById('modalPrev');
@@ -642,7 +621,9 @@ document.addEventListener('DOMContentLoaded', () => {
             tagline: card.querySelector('.project-tagline').textContent,
             context: card.getAttribute('data-context') || '',
             status: card.getAttribute('data-status') || 'NDA Protected',
-            details: card.getAttribute('data-details') || '',
+            challenge: card.getAttribute('data-challenge') || '',
+            approach: card.getAttribute('data-approach') || '',
+            outcome: card.getAttribute('data-outcome') || '',
             category: card.getAttribute('data-category').toUpperCase() === 'APP' 
                 ? 'MOBILE APPLICATION (COLLEGE MILESTONE)' 
                 : 'ENTERPRISE WEB APPLICATION (MINDTREX)',
@@ -656,10 +637,14 @@ document.addEventListener('DOMContentLoaded', () => {
         
         modalTitle.textContent = project.title;
         if (modalCategory) {
-            modalCategory.textContent = `${project.category} ${project.context} [${project.status}]`;
+            modalCategory.textContent = `${project.category} — ${project.context} [${project.status}]`;
         }
         if (modalDesc) modalDesc.textContent = project.tagline;
-        if (modalDetails) modalDetails.textContent = project.details;
+        
+        if (modalChallenge) modalChallenge.textContent = project.challenge;
+        if (modalApproach) modalApproach.textContent = project.approach;
+        if (modalOutcome) modalOutcome.textContent = project.outcome;
+
         if (modalImg) modalImg.src = project.images[imgIndex];
     }
 
@@ -668,14 +653,22 @@ document.addEventListener('DOMContentLoaded', () => {
             currentProjIndex = index;
             currentImageIndex = 0; 
             updateModalContent(currentProjIndex, currentImageIndex);
-            if (projectModal) projectModal.classList.add('active');
+            if (projectModal) {
+                projectModal.classList.add('active');
+                document.body.classList.add('modal-open'); // Locks background scroll
+            }
         });
     });
 
     if (modalClose && projectModal) {
-        modalClose.addEventListener('click', () => projectModal.classList.remove('active'));
+        const closeModal = () => {
+            projectModal.classList.remove('active');
+            document.body.classList.remove('modal-open'); // Restores background scroll
+        };
+
+        modalClose.addEventListener('click', closeModal);
         projectModal.addEventListener('click', (e) => { 
-            if (e.target === projectModal) projectModal.classList.remove('active'); 
+            if (e.target === projectModal) closeModal(); 
         });
     }
 
@@ -705,8 +698,50 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------
-    // 4. Carousel Drag-to-Scroll Handler
+    // Vertical Drag-to-Scroll for Modal Text Area
     // ----------------------------------------------------
+    const textScrollArea = document.querySelector('.modal-text-scroll-area');
+    if (textScrollArea) {
+        let isTextDown = false;
+        let startY;
+        let scrollTop;
+
+        textScrollArea.addEventListener('mousedown', (e) => {
+            isTextDown = true;
+            startY = e.pageY - textScrollArea.offsetTop;
+            scrollTop = textScrollArea.scrollTop;
+        });
+
+        textScrollArea.addEventListener('mouseleave', () => {
+            isTextDown = false;
+        });
+
+        textScrollArea.addEventListener('mouseup', () => {
+            isTextDown = false;
+        });
+
+        textScrollArea.addEventListener('mousemove', (e) => {
+            if (!isTextDown) return;
+            e.preventDefault();
+            const y = e.pageY - textScrollArea.offsetTop;
+            const walk = (y - startY) * 1.5; // Drag speed multiplier
+            textScrollArea.scrollTop = scrollTop - walk;
+        });
+
+        // Touch support for mobile/tablet dragging
+        textScrollArea.addEventListener('touchstart', (e) => {
+            startY = e.touches[0].pageY - textScrollArea.offsetTop;
+            scrollTop = textScrollArea.scrollTop;
+        });
+
+        textScrollArea.addEventListener('touchmove', (e) => {
+            const y = e.touches[0].pageY - textScrollArea.offsetTop;
+            const walk = (y - startY) * 1.5;
+            textScrollArea.scrollTop = scrollTop - walk;
+        });
+    }
+
+    // Carousel Drag-to-Scroll Handler
     const projectsSlider = document.getElementById('projectsContainer');
     if (projectsSlider) {
         let isProjDown = false;
@@ -736,6 +771,85 @@ document.addEventListener('DOMContentLoaded', () => {
             const x = e.pageX - projectsSlider.offsetLeft;
             const walk = (x - projStartX) * 2; 
             projectsSlider.scrollLeft = projScrollLeft - walk;
+        });
+    }
+
+    // Magnifier Zoom-on-Hover Effect for Modal Image
+    const container = document.getElementById('modalImgContainer');
+    const lens = document.getElementById('imgLens');
+    const lensImg = document.getElementById('lensImg');
+
+    if (container && modalImg && lens && lensImg) {
+        const zoomFactor = 2.5;
+
+        modalImg.addEventListener('load', () => {
+            lensImg.src = modalImg.src;
+        });
+
+        container.addEventListener('mousemove', (e) => {
+            if (!modalImg.src || !modalImg.complete) return;
+
+            const rect = container.getBoundingClientRect();
+            let x = e.clientX - rect.left;
+            let y = e.clientY - rect.top;
+
+            const lensWidth = lens.offsetWidth;
+            const lensHeight = lens.offsetHeight;
+
+            if (x < 0 || x > rect.width || y < 0 || y > rect.height) {
+                lens.style.display = 'none';
+                return;
+            }
+
+            lens.style.display = 'block';
+
+            lens.style.left = `${x - lensWidth / 2}px`;
+            lens.style.top = `${y - lensHeight / 2}px`;
+
+            const natWidth = modalImg.naturalWidth || 800;
+            const natHeight = modalImg.naturalHeight || 600;
+            const imgRatio = natWidth / natHeight;
+            const containerRatio = rect.width / rect.height;
+            
+            let renderedWidth, renderedHeight, offsetX = 0, offsetY = 0;
+
+            if (containerRatio > imgRatio) {
+                renderedHeight = rect.height;
+                renderedWidth = rect.height * imgRatio;
+                offsetX = (rect.width - renderedWidth) / 2;
+            } else {
+                renderedWidth = rect.width;
+                renderedHeight = rect.width / imgRatio;
+                offsetY = (rect.height - renderedHeight) / 2;
+            }
+
+            const scaledWidth = renderedWidth * zoomFactor;
+            const scaledHeight = renderedHeight * zoomFactor;
+            
+            if (lensImg.src !== modalImg.src) {
+                lensImg.src = modalImg.src;
+            }
+            lensImg.style.width = `${scaledWidth}px`;
+            lensImg.style.height = `${scaledHeight}px`;
+
+            const relX = x - offsetX;
+            const relY = y - offsetY;
+
+            const moveX = -(relX * zoomFactor - lensWidth / 2);
+            const moveY = -(relY * zoomFactor - lensHeight / 2);
+
+            lensImg.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+
+        container.addEventListener('mouseleave', () => {
+            lens.style.display = 'none';
+        });
+
+        container.addEventListener('mouseenter', () => {
+            if (modalImg.src) {
+                lens.style.display = 'block';
+                lensImg.src = modalImg.src;
+            }
         });
     }
 });
