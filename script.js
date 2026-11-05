@@ -202,6 +202,12 @@ let currentIndex = 0;
 let isScrolling = false;
 
 window.addEventListener('wheel', (e) => {
+    // If the modal is open, do not trigger page snap scrolling
+    const projectModal = document.getElementById('projectModal');
+    if (projectModal && projectModal.classList.contains('active')) {
+        return; 
+    }
+
     if (isScrolling) return;
     
     if (e.deltaY > 0) {
@@ -625,7 +631,7 @@ document.addEventListener('DOMContentLoaded', () => {
             approach: card.getAttribute('data-approach') || '',
             outcome: card.getAttribute('data-outcome') || '',
             category: card.getAttribute('data-category').toUpperCase() === 'APP' 
-                ? 'MOBILE APPLICATION (COLLEGE MILESTONE)' 
+                ? 'MOBILE APPLICATION (Academic Showcase)' 
                 : 'ENTERPRISE WEB APPLICATION (MINDTREX)',
             images: rawImages.split(',').map(img => img.trim())
         };
@@ -698,13 +704,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------
-    // Vertical Drag-to-Scroll for Modal Text Area
+    // Vertical Drag-to-Scroll & Stop Propagation for Modal Text Area
     // ----------------------------------------------------
     const textScrollArea = document.querySelector('.modal-text-scroll-area');
     if (textScrollArea) {
         let isTextDown = false;
         let startY;
         let scrollTop;
+
+        // CRUCIAL: Stop wheel events from bubbling up to window snap scroll
+        textScrollArea.addEventListener('wheel', (e) => {
+            e.stopPropagation();
+        }, { passive: true });
 
         textScrollArea.addEventListener('mousedown', (e) => {
             isTextDown = true;
@@ -724,21 +735,20 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!isTextDown) return;
             e.preventDefault();
             const y = e.pageY - textScrollArea.offsetTop;
-            const walk = (y - startY) * 1.5; // Drag speed multiplier
+            const walk = (y - startY) * 1.5; 
             textScrollArea.scrollTop = scrollTop - walk;
         });
 
-        // Touch support for mobile/tablet dragging
         textScrollArea.addEventListener('touchstart', (e) => {
             startY = e.touches[0].pageY - textScrollArea.offsetTop;
             scrollTop = textScrollArea.scrollTop;
-        });
+        }, { passive: true });
 
         textScrollArea.addEventListener('touchmove', (e) => {
             const y = e.touches[0].pageY - textScrollArea.offsetTop;
             const walk = (y - startY) * 1.5;
             textScrollArea.scrollTop = scrollTop - walk;
-        });
+        }, { passive: true });
     }
 
     // Carousel Drag-to-Scroll Handler
